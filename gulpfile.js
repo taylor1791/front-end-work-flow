@@ -16,7 +16,7 @@ var
 // Expose the addFiles object so that other gulpfiles can add to the linting
 // tasks. This allows this repository to be a "sub-module" of an existing
 // repository.
-exports = module.exports = exts;
+exports = module.exports = addFiles;
 
 //
 // Linting is the process of identifing usage of unidomatic features of
@@ -27,7 +27,7 @@ exports = module.exports = exts;
 Object.keys( fileTypes ).forEach( function( fileType ) {
 
   gulp.task( 'lint-' + fileType, function() {
-    var files = srcFiles[ fileType ].concat( addFiles.json );
+    var files = fileTypes[ fileType ].concat( addFiles.json );
 
     gulp.src( files )
       .pipe( plugins.jsonlint() )
