@@ -1,0 +1,27 @@
+{
+  "name": "Front-End-Workflow",
+  "version": "0.0.0",
+  "description": "Workflow for JavaScript minors and olympiads.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/taylor1791/Front-End-Workflow.git"
+  },
+  "keywords": [
+    "workflow"
+  ],
+  "author": "Taylor Everding Taylor@Everding.email",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/taylor1791/Front-End-Workflow/issues"
+  },
+  "homepage": "https://github.com/taylor1791/Front-End-Workflow",
+  "devDependencies": {
+    "gulp": "^3.8.8",
+    "gulp-jsonlint": "^0.1.0",
+    "gulp-load-plugins": "^0.7.0"
+  }
+}
