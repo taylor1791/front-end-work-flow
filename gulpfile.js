@@ -6,10 +6,14 @@ var
 
   // Keeps track of all the different files and their type for linting.
   fileTypes = {
-    json: [ __dirname + '/package.json' ]
+    json: [ __dirname + '/package.json', __dirname + '/.jshintrc' ],
+    browser: [ ],
+    node: [ __dirname + '/gulpfile.js' ]
   },
   // This
   addFiles = {
+    node: [],
+    browser: [],
     json: []
   };
 
@@ -23,16 +27,33 @@ exports = module.exports = addFiles;
 // language. This is a tool to prevent bugs by warning the programmer of the
 // useage of "bad" features.
 
-// Generates all the types of linters.
-Object.keys( fileTypes ).forEach( function( fileType ) {
+gulp.task( 'lint-node', function() {
+  var files = fileTypes.node.concat( addFiles.node );
 
-  gulp.task( 'lint-' + fileType, function() {
-    var files = fileTypes[ fileType ].concat( addFiles.json );
+  return gulp.src( files )
+    .pipe( plugins.jshint( {
+      node: true
+    } ) )
+    .pipe( plugins.jshint.reporter( 'jshint-stylish') );
+} );
 
-    gulp.src( files )
-      .pipe( plugins.jsonlint() )
-      .pipe( plugins.jsonlint.reporter() );
-  } );
+gulp.task( 'lint-browser', function() {
+  var files = fileTypes.js.concat( addFiles.js );
+
+  return !files.length ? true : gulp.src( files )
+    .pipe( plugins.jshint( {
+      browser: true
+    } ) )
+    .pipe( plugins.jshint.reporter( 'jshint-stylish' ) );
+} );
+
+// JSON linting
+gulp.task( 'lint-json', function() {
+  var files = fileTypes.json.concat( addFiles.json );
+
+  return gulp.src( files )
+    .pipe( plugins.jsonlint() )
+    .pipe( plugins.jsonlint.reporter() );
 } );
 
 gulp.task( 'default', function() {
