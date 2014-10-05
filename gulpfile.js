@@ -35,3 +35,20 @@ Object.keys( fileTypes ).forEach( function( fileType ) {
   } );
 } );
 
+gulp.task( 'default', function() {
+
+  var
+    helpMessage = [
+      '',
+      '  Available Tasks',
+      '  ---------------',
+      '',
+    ],
+    tasks = Object.keys( gulp.tasks ).map( function( taskName ) {
+      return '  ' + taskName;
+    } );
+
+  console.log( helpMessage.concat( tasks ).concat( [ '' ] ).join( '\n' ) );
+
+} );
+
