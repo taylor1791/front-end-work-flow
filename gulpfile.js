@@ -10,7 +10,8 @@ var
     browser: [ ],
     node: [ __dirname + '/gulpfile.js' ]
   },
-  // This
+  // This files are added by others when this module is `require`d and allows
+  // this workflow to be extended.
   addFiles = {
     node: [],
     browser: [],
@@ -26,6 +27,7 @@ exports = module.exports = addFiles;
 // Linting is the process of identifing usage of unidomatic features of
 // language. This is a tool to prevent bugs by warning the programmer of the
 // useage of "bad" features.
+//
 
 gulp.task( 'lint-node', function() {
   var files = fileTypes.node.concat( addFiles.node );
@@ -38,7 +40,7 @@ gulp.task( 'lint-node', function() {
 } );
 
 gulp.task( 'lint-browser', function() {
-  var files = fileTypes.js.concat( addFiles.js );
+  var files = fileTypes.browser.concat( addFiles.browser );
 
   return !files.length ? true : gulp.src( files )
     .pipe( plugins.jshint( {
