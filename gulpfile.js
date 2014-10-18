@@ -6,7 +6,11 @@ var
 
   // Keeps track of all the different files and their type for linting.
   fileTypes = {
-    json: [ __dirname + '/package.json', __dirname + '/.jshintrc' ],
+    json: [
+      __dirname + '/package.json',
+      __dirname + '/.jshintrc',
+      __dirname + '/.jscsrc'
+    ],
     browser: [ ],
     node: [ __dirname + '/gulpfile.js' ]
   },
@@ -36,7 +40,8 @@ gulp.task( 'lint-node', function() {
     .pipe( plugins.jshint( {
       node: true
     } ) )
-    .pipe( plugins.jshint.reporter( 'jshint-stylish') );
+    .pipe( plugins.jshint.reporter( 'jshint-stylish' ) )
+    .pipe( plugins.jshint.reporter( 'fail' ) );
 } );
 
 gulp.task( 'lint-browser', function() {
@@ -46,7 +51,8 @@ gulp.task( 'lint-browser', function() {
     .pipe( plugins.jshint( {
       browser: true
     } ) )
-    .pipe( plugins.jshint.reporter( 'jshint-stylish' ) );
+    .pipe( plugins.jshint.reporter( 'jshint-stylish' ) )
+    .pipe( plugins.jshint.reporter( 'fail' ) );
 } );
 
 // JSON linting
@@ -58,6 +64,16 @@ gulp.task( 'lint-json', function() {
     .pipe( plugins.jsonlint.reporter() );
 } );
 
+gulp.task( 'coding-style', function() {
+  var files = fileTypes.node
+    .concat( fileTypes.browser )
+    .concat( addFiles.node )
+    .concat( addFiles.browser );
+
+  return gulp.src( files )
+    .pipe( plugins.jscs( __dirname + '/.jscsrc' ) );
+} );
+
 gulp.task( 'default', function() {
 
   var
@@ -65,7 +81,7 @@ gulp.task( 'default', function() {
       '',
       '  Available Tasks',
       '  ---------------',
-      '',
+      ''
     ],
     tasks = Object.keys( gulp.tasks ).map( function( taskName ) {
       return '  ' + taskName;
@@ -74,4 +90,3 @@ gulp.task( 'default', function() {
   console.log( helpMessage.concat( tasks ).concat( [ '' ] ).join( '\n' ) );
 
 } );
-
