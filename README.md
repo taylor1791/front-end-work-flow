@@ -6,4 +6,8 @@ Workflow for JavaScript minors and olympiads.
 
 TODO
 ----
- * Pretty JSON validation errors
+* HTML-lint
+* LESS
+* unit-test
+* e2e
+* build??

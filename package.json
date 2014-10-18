@@ -21,6 +21,7 @@
   "homepage": "https://github.com/taylor1791/Front-End-Workflow",
   "devDependencies": {
     "gulp": "^3.8.8",
+    "gulp-htmlhint": "0.0.9",
     "gulp-jscs": "^1.1.2",
     "gulp-jshint": "^1.8.4",
     "gulp-jsonlint": "^0.1.0",

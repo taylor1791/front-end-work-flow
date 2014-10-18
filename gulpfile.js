@@ -12,14 +12,16 @@ var
       __dirname + '/.jscsrc'
     ],
     browser: [ ],
-    node: [ __dirname + '/gulpfile.js' ]
+    node: [ __dirname + '/gulpfile.js' ],
+    html: [ ]
   },
   // This files are added by others when this module is `require`d and allows
   // this workflow to be extended.
   addFiles = {
-    node: [],
-    browser: [],
-    json: []
+    node: [ ],
+    browser: [ ],
+    json: [ ],
+    html: [ ]
   };
 
 // Expose the addFiles object so that other gulpfiles can add to the linting
@@ -62,6 +64,15 @@ gulp.task( 'lint-json', function() {
   return gulp.src( files )
     .pipe( plugins.jsonlint() )
     .pipe( plugins.jsonlint.reporter() );
+} );
+
+// HTML linting
+gulp.task( 'lint-html', function() {
+  var files = fileTypes.html.concat( addFiles.html );
+
+  return !files.length ? true : gulp.src( files )
+    .pipe( plugins.htmlhint() )
+    .pipe( plugins.htmlhint.reporter() );
 } );
 
 gulp.task( 'coding-style', function() {
