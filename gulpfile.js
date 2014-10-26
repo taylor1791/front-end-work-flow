@@ -2,6 +2,7 @@
 
 var
   gulp      = require( 'gulp' ),
+  karma     = require( 'karma' ).server,
   plugins   = require( 'gulp-load-plugins' )(),
 
   // Keeps track of all the different files and their type for linting.
@@ -21,7 +22,8 @@ var
     node: [ ],
     browser: [ ],
     json: [ ],
-    html: [ ]
+    html: [ ],
+    unit: [ ]
   };
 
 // Expose the addFiles object so that other gulpfiles can add to the linting
@@ -75,14 +77,31 @@ gulp.task( 'lint-html', function() {
     .pipe( plugins.htmlhint.reporter() );
 } );
 
+// Verify coding style
 gulp.task( 'coding-style', function() {
   var files = fileTypes.node
     .concat( fileTypes.browser )
     .concat( addFiles.node )
-    .concat( addFiles.browser );
+    .concat( addFiles.browser )
+    .concat( addFiles.unit );
 
   return gulp.src( files )
     .pipe( plugins.jscs( __dirname + '/.jscsrc' ) );
+} );
+
+// Unit tests
+gulp.task( 'unit-test', function( done ) {
+  var files = addFiles.unit.map( function( x ) {
+    return process.cwd().concat( '/', x );
+  } );
+
+  karma.start( {
+    configFile: __dirname + '/karma.conf.js',
+    basePath: '..',
+    files: files,
+    singleRun: true
+  }, done );
+
 } );
 
 gulp.task( 'default', function() {

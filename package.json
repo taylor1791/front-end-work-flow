@@ -26,6 +26,9 @@
     "gulp-jshint": "^1.8.4",
     "gulp-jsonlint": "^0.1.0",
     "gulp-load-plugins": "^0.7.0",
-    "jshint-stylish": "^1.0.0"
+    "jshint-stylish": "^1.0.0",
+    "karma": "^0.12.24",
+    "karma-jasmine": "^0.1.5",
+    "karma-phantomjs-launcher": "^0.1.4"
   }
 }
