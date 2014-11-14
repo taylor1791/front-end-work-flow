@@ -1,24 +1,29 @@
 'use strict';
 
 var
-  gulp      = require( 'gulp' ),
-  karma     = require( 'karma' ).server,
-  plugins   = require( 'gulp-load-plugins' )(),
+  gulp = require( 'gulp' ),
+  requiredir = require( 'require-dir' ),
 
-  // Keeps track of all the different files and their type for linting.
-  fileTypes = {
+  // Keep a copy of all the tasks to generate a help message
+  tasks = null,
+
+  // All the workflow files classified by their type. The type (key) dictates
+  // what types of validations that apply to the files.
+  workflow = {
+    node: [ __dirname + '/gulpfile.js', __dirname + 'gulp-tasks/*.js' ],
+    browser: [ ],
     json: [
       __dirname + '/package.json',
       __dirname + '/.jshintrc',
       __dirname + '/.jscsrc'
     ],
-    browser: [ ],
-    node: [ __dirname + '/gulpfile.js' ],
-    html: [ ]
+    html: [ ],
+    unit: [ ]
   },
-  // This files are added by others when this module is `require`d and allows
-  // this workflow to be extended.
-  addFiles = {
+
+  // The workflow is purposfully extendable. Allowing other projects to add
+  // files to validate treating them as first class citizens.
+  additional = {
     node: [ ],
     browser: [ ],
     json: [ ],
@@ -26,97 +31,36 @@ var
     unit: [ ]
   };
 
-// Expose the addFiles object so that other gulpfiles can add to the linting
-// tasks. This allows this repository to be a "sub-module" of an existing
-// repository.
-exports = module.exports = addFiles;
+// Attach a function to the gulp singleton that computes all the files to
+// validate. This allows for the gulp tasks to be split accross multiple files
+// effectivle moving the focus from the individual tasks to the workflow.
+gulp.files = function( type ) {
+  return ( workflow[ type ] || [] ).concat( additional[ type ] || [] );
+};
 
-//
-// Linting is the process of identifing usage of unidomatic features of
-// language. This is a tool to prevent bugs by warning the programmer of the
-// useage of "bad" features.
-//
+// Add all gulp tasks into this file and create a list of the loaded tasks.
+requiredir( './gulp-tasks' );
+tasks = Object.keys( gulp.tasks );
 
-gulp.task( 'lint-node', function() {
-  var files = fileTypes.node.concat( addFiles.node );
+// Expose the `additionalFiles` object so that other node scripts can add files
+// for validation. This allows this repository to be a "sub-module" (hopefully a
+// git submodule) of other repositories.
+exports = module.exports = additional;
 
-  return gulp.src( files )
-    .pipe( plugins.jshint( {
-      node: true
-    } ) )
-    .pipe( plugins.jshint.reporter( 'jshint-stylish' ) )
-    .pipe( plugins.jshint.reporter( 'fail' ) );
-} );
-
-gulp.task( 'lint-browser', function() {
-  var files = fileTypes.browser.concat( addFiles.browser );
-
-  return !files.length ? true : gulp.src( files )
-    .pipe( plugins.jshint( {
-      browser: true
-    } ) )
-    .pipe( plugins.jshint.reporter( 'jshint-stylish' ) )
-    .pipe( plugins.jshint.reporter( 'fail' ) );
-} );
-
-// JSON linting
-gulp.task( 'lint-json', function() {
-  var files = fileTypes.json.concat( addFiles.json );
-
-  return gulp.src( files )
-    .pipe( plugins.jsonlint() )
-    .pipe( plugins.jsonlint.reporter() );
-} );
-
-// HTML linting
-gulp.task( 'lint-html', function() {
-  var files = fileTypes.html.concat( addFiles.html );
-
-  return !files.length ? true : gulp.src( files )
-    .pipe( plugins.htmlhint() )
-    .pipe( plugins.htmlhint.reporter() );
-} );
-
-// Verify coding style
-gulp.task( 'coding-style', function() {
-  var files = fileTypes.node
-    .concat( fileTypes.browser )
-    .concat( addFiles.node )
-    .concat( addFiles.browser )
-    .concat( addFiles.unit );
-
-  return gulp.src( files )
-    .pipe( plugins.jscs( __dirname + '/.jscsrc' ) );
-} );
-
-// Unit tests
-gulp.task( 'unit-test', function( done ) {
-  var files = addFiles.unit.map( function( x ) {
-    return process.cwd().concat( '/', x );
-  } );
-
-  karma.start( {
-    configFile: __dirname + '/karma.conf.js',
-    basePath: '..',
-    files: files,
-    singleRun: true
-  }, done );
-
-} );
+// Define a task dedicated to helping the user out.
 
 gulp.task( 'default', function() {
-
   var
-    helpMessage = [
+    message = [
       '',
       '  Available Tasks',
       '  ---------------',
       ''
     ],
-    tasks = Object.keys( gulp.tasks ).map( function( taskName ) {
-      return '  ' + taskName;
+    taskLines = tasks.map( function( name ) {
+      return '    ' + name;
     } );
 
-  console.log( helpMessage.concat( tasks ).concat( [ '' ] ).join( '\n' ) );
+  console.log( message.concat( taskLines ).concat( '' ).join( '\n' ) );
 
 } );
