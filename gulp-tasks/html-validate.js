@@ -12,6 +12,8 @@ gulp.task( 'lint-html', function() {
   var files = gulp.files( 'html' );
 
   return gulp.src( files )
-    .pipe( htmlhint() )
+    .pipe( htmlhint( {
+      doctype-first: false
+    } ) )
     .pipe( htmlhint.reporter() );
 } );
