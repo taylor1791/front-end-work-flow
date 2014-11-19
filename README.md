@@ -9,7 +9,7 @@ TODO
 // Framework
 // TODO bumpAppVersion
 // TODO controlPreviewServer
-// TODO live reload
+// TODO BrowserSync
 
 // Analysis
 // TODO codebaseStats - plato
@@ -42,6 +42,10 @@ TODO
 // TODO userref
 // TODO data-uri example
 // TODO CSS Sprite generation
+
+// 
+// TODO look https://github.com/google/web-starter-kit/blob/master/gulpfile.js
+
 
 // TODO shrinkwrap to verify node packages
 // TODO Remove Modernizr from bower and use gulp-modernizr to build and insert
