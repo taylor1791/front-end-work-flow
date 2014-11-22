@@ -13,7 +13,7 @@ gulp.task( 'lint-html', function() {
 
   return gulp.src( files )
     .pipe( htmlhint( {
-      doctype-first: false
+      'doctype-first': false
     } ) )
     .pipe( htmlhint.reporter() );
 } );

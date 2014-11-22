@@ -48,7 +48,6 @@ tasks = Object.keys( gulp.tasks );
 exports = module.exports = additional;
 
 // Define a task dedicated to helping the user out.
-
 gulp.task( 'default', function() {
   var
     message = [
