@@ -42,6 +42,14 @@ gulp.files = function( type ) {
 requiredir( './gulp-tasks' );
 tasks = Object.keys( gulp.tasks );
 
+// This is a development workflow
+gulp.task( 'medusa-gaze', function() {
+  gulp.watch( gulp.files( 'node' ) , [ 'lint-node', 'coding-style' ] );
+  gulp.watch( gulp.files( 'browser' ) , [ 'lint-browser', 'coding-style' ] );
+  gulp.watch( gulp.files( 'json' ) , [ 'lint-json' ] );
+  gulp.watch( gulp.files( 'html' ) , [ 'lint-html' ] );
+} );
+
 // Expose the `additionalFiles` object so that other node scripts can add files
 // for validation. This allows this repository to be a "sub-module" (hopefully a
 // git submodule) of other repositories.

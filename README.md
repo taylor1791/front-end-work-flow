@@ -3,6 +3,14 @@ Front-End-Workflow
 
 Workflow for JavaScript minors and olympiads.
 
+Workflows
+---------
+
+### medusa-gaze
+
+`gulp medusa-gaze` is a workflow that lints html, json, node, and browser
+JavaScript. It also checks coding style.
+
 TODO
 ----
 
