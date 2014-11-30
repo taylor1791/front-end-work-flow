@@ -18,7 +18,8 @@ var
       __dirname + '/.jscsrc'
     ],
     html: [ ],
-    unit: [ ]
+    unit: [ ],
+    serve: [ ]
   },
 
   // The workflow is purposfully extendable. Allowing other projects to add
@@ -28,7 +29,8 @@ var
     browser: [ ],
     json: [ ],
     html: [ ],
-    unit: [ ]
+    unit: [ ],
+    serve: [ ]
   };
 
 // Attach a function to the gulp singleton that computes all the files to
@@ -43,7 +45,7 @@ requiredir( './gulp-tasks' );
 tasks = Object.keys( gulp.tasks );
 
 // This is a development workflow
-gulp.task( 'medusa-gaze', function() {
+gulp.task( 'medusa-gaze', [ 'serve' ], function() {
   gulp.watch( gulp.files( 'node' ), [ 'lint-node', 'coding-style' ] );
   gulp.watch( gulp.files( 'browser' ), [ 'lint-browser', 'coding-style' ] );
   gulp.watch( gulp.files( 'json' ), [ 'lint-json' ] );
