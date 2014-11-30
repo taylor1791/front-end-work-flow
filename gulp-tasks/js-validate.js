@@ -4,6 +4,8 @@
 // forcing his opnions on the code. A complete list of rules is available on
 // [jshint.com](http://www.jshint.com/docs/)
 
+'use strict';
+
 var
   gulp = require( 'gulp' ),
   jshint = require( 'gulp-jshint' );

@@ -6,6 +6,8 @@
 // see the [rules](https://github.com/jscs-dev/node-jscs#rules).
 //
 
+'use strict';
+
 var
   gulp = require( 'gulp' ),
   jscs = require( 'gulp-jscs' );

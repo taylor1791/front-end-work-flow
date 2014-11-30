@@ -4,6 +4,8 @@
 // [wiki](https://github.com/yaniswang/HTMLHint/wiki/Rules)
 //
 
+'use strict';
+
 var
   gulp = require( 'gulp' ),
   htmlhint = require( 'gulp-htmlhint' );

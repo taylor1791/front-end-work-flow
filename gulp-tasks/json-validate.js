@@ -4,6 +4,8 @@
 // details that V8's JSON.parse does not.
 //
 
+'use strict';
+
 var
   gulp = require( 'gulp' ),
   jsonlint = require( 'gulp-jsonlint' );
