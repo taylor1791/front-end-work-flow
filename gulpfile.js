@@ -44,10 +44,11 @@ tasks = Object.keys( gulp.tasks );
 
 // This is a development workflow
 gulp.task( 'medusa-gaze', function() {
-  gulp.watch( gulp.files( 'node' ) , [ 'lint-node', 'coding-style' ] );
-  gulp.watch( gulp.files( 'browser' ) , [ 'lint-browser', 'coding-style' ] );
-  gulp.watch( gulp.files( 'json' ) , [ 'lint-json' ] );
-  gulp.watch( gulp.files( 'html' ) , [ 'lint-html' ] );
+  gulp.watch( gulp.files( 'node' ), [ 'lint-node', 'coding-style' ] );
+  gulp.watch( gulp.files( 'browser' ), [ 'lint-browser', 'coding-style' ] );
+  gulp.watch( gulp.files( 'json' ), [ 'lint-json' ] );
+  gulp.watch( gulp.files( 'html' ), [ 'lint-html' ] );
+  gulp.watch( gulp.files( 'unit' ), [ 'coding-style' ] );
 } );
 
 // Expose the `additionalFiles` object so that other node scripts can add files
