@@ -10,7 +10,7 @@ var
   // All the workflow files classified by their type. The type (key) dictates
   // what types of validations that apply to the files.
   workflow = {
-    node: [ __dirname + '/gulpfile.js', __dirname + 'gulp-tasks/*.js' ],
+    node: [ __dirname + '/gulpfile.js', __dirname + '/gulp-tasks/*.js' ],
     browser: [ ],
     json: [
       __dirname + '/package.json',
