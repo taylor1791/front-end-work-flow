@@ -13,11 +13,10 @@ var
   jscs = require( 'gulp-jscs' );
 
 gulp.task( 'coding-style', function() {
+  // The unit files are not here becauase they can include external libraires
   var
     files = gulp.files( 'browser' )
-      .concat( gulp.files( 'node' ) )
-      .concat( gulp.files( ' browser' ) )
-      .concat( gulp.files( 'unit' ) );
+      .concat( gulp.files( 'node' ) );
 
   return gulp.src( files )
     .pipe( jscs( __dirname + '/../.jscsrc' ) );
