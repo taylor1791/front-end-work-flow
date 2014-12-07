@@ -62,30 +62,3 @@ TODO
 // into /lib - Note, until Modernizr 3.0 is released, gulp-modernizr doesn't
 // work via NPM.
 
-// karma     = require( 'karma' ).server,
-
-/*
-    "karma": "^0.12.24",
-    "karma-jasmine": "^0.1.5",
-    "karma-phantomjs-launcher": "^0.1.4"
-    */
-
-/*
-
-
-
-// Unit tests
-gulp.task( 'unit-test', function( done ) {
-  var files = addFiles.unit.map( function( x ) {
-    return process.cwd().concat( '/', x );
-  } );
-
-  karma.start( {
-    configFile: __dirname + '/karma.conf.js',
-    basePath: '..',
-    files: files,
-    singleRun: true
-  }, done );
-
-} );
-*/
