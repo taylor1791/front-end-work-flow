@@ -16,11 +16,6 @@ TODO
 
 // TODO gulp task for tunnel
 
-// Framework
-// TODO bumpAppVersion
-// TODO controlPreviewServer
-// TODO BrowserSync
-
 // Analysis
 // TODO codebaseStats - plato
 // TODO Taylor analysis
@@ -36,7 +31,6 @@ TODO
 // Testing
 // TODO controlE2ETestServer
 // TODO controlSeleniumServer
-// TODO controlUnitTestServer
 
 // Semi-Build
 // TODO generateSprites
@@ -53,12 +47,5 @@ TODO
 // TODO data-uri example
 // TODO CSS Sprite generation
 
-// 
+//
 // TODO look https://github.com/google/web-starter-kit/blob/master/gulpfile.js
-
-
-// TODO shrinkwrap to verify node packages
-// TODO Remove Modernizr from bower and use gulp-modernizr to build and insert
-// into /lib - Note, until Modernizr 3.0 is released, gulp-modernizr doesn't
-// work via NPM.
-
