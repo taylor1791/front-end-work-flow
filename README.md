@@ -3,6 +3,10 @@ Front-End-Workflow
 
 Workflow for JavaScript minors and olympiads.
 
+    $ npm install gulp
+    $ gulp install
+    $ medusa-gaze
+
 Workflows
 ---------
 

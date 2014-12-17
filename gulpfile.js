@@ -1,8 +1,8 @@
 'use strict';
 
 var
-  gulp = require( 'gulp' ),
-  requiredir = require( 'require-dir' ),
+  // Bootstrap the gulp app and get an instance of gulp
+  gulp = require( __dirname + '/gulp-tasks/gulp-few-setup' ),
 
   // Keep a copy of all the tasks to generate a help message
   tasks = null,
@@ -10,6 +10,7 @@ var
   // All the workflow files classified by their type. The type (key) dictates
   // what types of validations that apply to the files.
   workflow = {
+    'package.json': [ __dirname + '/package.json' ],
     node: [ __dirname + '/gulpfile.js', __dirname + '/gulp-tasks/*.js' ],
     browser: [ ],
     json: [
@@ -25,6 +26,7 @@ var
   // The workflow is purposfully extendable. Allowing other projects to add
   // files to validate treating them as first class citizens.
   additional = {
+    'package.json': [ ],
     node: [ ],
     browser: [ ],
     json: [ ],
@@ -40,8 +42,7 @@ gulp.files = function( type ) {
   return ( workflow[ type ] || [] ).concat( additional[ type ] || [] );
 };
 
-// Add all gulp tasks into this file and create a list of the loaded tasks.
-requiredir( './gulp-tasks' );
+// Create a list of the loaded tasks.
 tasks = Object.keys( gulp.tasks );
 
 // This is a development workflow
