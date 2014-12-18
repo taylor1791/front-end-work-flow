@@ -8,27 +8,32 @@
 
 var
   gulp = require( 'gulp' ),
-  jshint = require( 'gulp-jshint' );
+  jshint = require( 'gulp-jshint' ),
+  jshintrc = require( 'fs' ).readFileSync( __dirname + '/../.jshintrc' );
 
 gulp.task( 'lint-node', function() {
-  var files = gulp.files( 'node' );
+  var
+    files = gulp.files( 'node' ),
+    config = JSON.parse( jshintrc );
+
+  config.node = true;
 
   return gulp.src( files )
-    .pipe( jshint( {
-      node: true
-    } ) )
+    .pipe( jshint( config ) )
     .pipe( jshint.reporter( 'jshint-stylish' ) )
     .pipe( jshint.reporter( 'fail' ) );
 
 } );
 
 gulp.task( 'lint-browser', function() {
-  var files = gulp.files( 'browser' );
+  var
+    files = gulp.files( 'browser' ),
+    config = JSON.parse( jshintrc );
+
+  config.node = true;
 
   return gulp.src( files )
-    .pipe( jshint( {
-      browser: true
-    } ) )
+    .pipe( jshint( config ) )
     .pipe( jshint.reporter( 'jshint-stylish' ) )
     .pipe( jshint.reporter( 'fail' ) );
 
