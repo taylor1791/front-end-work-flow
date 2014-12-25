@@ -30,7 +30,7 @@ gulp.task( 'lint-browser', function() {
     files = gulp.files( 'browser' ),
     config = JSON.parse( jshintrc );
 
-  config.node = true;
+  config.browser = true;
 
   return gulp.src( files )
     .pipe( jshint( config ) )
