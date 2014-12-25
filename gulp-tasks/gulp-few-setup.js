@@ -46,7 +46,7 @@ gulp.task( 'install', function( cb ) {
 
     var dependencies = [].concat.apply(
       [],
-      gulp.files( 'package.json' ).map( require ).map( createDepArr )
+      gulp.files( 'package' ).map( require ).map( createDepArr )
     );
 
     if ( err ) {

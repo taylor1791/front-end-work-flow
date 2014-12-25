@@ -10,7 +10,7 @@ var
   // All the workflow files classified by their type. The type (key) dictates
   // what types of validations that apply to the files.
   workflow = {
-    'package.json': [ __dirname + '/package.json' ],
+    package: [ __dirname + '/package.json' ],
     node: [ __dirname + '/gulpfile.js', __dirname + '/gulp-tasks/*.js' ],
     browser: [ ],
     json: [
@@ -26,20 +26,24 @@ var
   // The workflow is purposfully extendable. Allowing other projects to add
   // files to validate treating them as first class citizens.
   additional = {
-    'package.json': [ ],
+    package: [ ],
     node: [ ],
     browser: [ ],
     json: [ ],
     html: [ ],
     unit: [ ],
     serve: [ ]
+  },
+
+  config = {
+    files: additional
   };
 
 // Attach a function to the gulp singleton that computes all the files to
 // validate. This allows for the gulp tasks to be split accross multiple files
 // effectivle moving the focus from the individual tasks to the workflow.
 gulp.files = function( type ) {
-  return ( workflow[ type ] || [] ).concat( additional[ type ] || [] );
+  return ( workflow[ type ] || [] ).concat( config.files[ type ] || [] );
 };
 
 // Create a list of the loaded tasks.
@@ -60,7 +64,7 @@ gulp.task( 'medusa-gaze', [ 'serve' ], function() {
 // Expose the `additionalFiles` object so that other node scripts can add files
 // for validation. This allows this repository to be a "sub-module" (hopefully a
 // git submodule) of other repositories.
-exports = module.exports = additional;
+exports = module.exports = config;
 
 // Define a task dedicated to helping the user out.
 gulp.task( 'default', function() {
