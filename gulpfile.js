@@ -32,7 +32,7 @@ var
     json: [ ],
     html: [ ],
     unit: [ ],
-    serve: [ ]
+    libraries: [ ]
   },
 
   config = {
@@ -43,7 +43,9 @@ var
 // validate. This allows for the gulp tasks to be split accross multiple files
 // effectivle moving the focus from the individual tasks to the workflow.
 gulp.files = function( type ) {
-  return ( workflow[ type ] || [] ).concat( config.files[ type ] || [] );
+  return ( workflow[ type ] || [] ).concat(
+    config.files[ type ] || []
+  );
 };
 
 // Create a list of the loaded tasks.

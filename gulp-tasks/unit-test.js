@@ -14,9 +14,22 @@ var
   gulp  = require( 'gulp' );
 
 gulp.task( 'unit-test', function( done ) {
-  var files = gulp.files( 'unit' ).concat(
-    gulp.files( 'browser' )
-  );
+
+  var
+    libs = gulp.files( 'libraries' )[ 0 ],
+    libFiles = Object.keys( libs ).map( function( libFile ) {
+      var libFilePath = libs[ libFile ];
+
+      return /\/$/.test( libFilePath ) ?
+        libFilePath + '**/*.{js,css}' :
+        libFilePath;
+    } ),
+
+    files =
+      libFiles.concat(
+        gulp.files( 'unit' ),
+        gulp.files( 'browser' )
+      );
 
   karma.start( {
     configFile: __dirname + '/../karma.conf.js',

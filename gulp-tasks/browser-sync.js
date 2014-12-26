@@ -22,7 +22,8 @@ gulp.task( 'serve', function() {
   browserSync( {
     port: process.env.PORT || undefined,
     server: {
-      baseDir: gulp.files( 'serve' )
+      baseDir: gulp.files( 'serve' ),
+      routes: gulp.files( 'libraries' )[0]
     },
     files: gulp.files( 'serve' ).map( function( dir ) {
       return dir + '/**/*.*';
