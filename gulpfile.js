@@ -5,7 +5,8 @@ var
   gulp = require( __dirname + '/gulp-tasks/gulp-few-setup' ),
 
   // Keep a copy of all the tasks to generate a help message
-  tasks = null,
+  taskNames = null,
+  aggTaskNames = null,
 
   // All the workflow files classified by their type. The type (key) dictates
   // what types of validations that apply to the files.
@@ -35,8 +36,35 @@ var
     libraries: [ ]
   },
 
+  // The configuration that users of FEW can modify.
   config = {
     files: additional
+  },
+
+  // Define all the workflows
+  // Create all the aggregate tasks or "workflows"
+  aggTasks = {
+    'medusa-gaze': {
+      dependencies: [ 'serve' ],
+      watches: [
+        {
+          files: [ 'node' ],
+          tasks: [ 'lint-node', 'coding-style' ]
+        }, {
+          files: [ 'browser' ],
+          tasks: [ 'lint-browser', 'coding-style', 'unit-test' ]
+        }, {
+          files: [ 'json' ],
+          tasks: [ 'lint-json' ]
+        }, {
+          files: [ 'html' ],
+          tasks: [ 'lint-html' ]
+        }, {
+          files: [ 'unit' ],
+          tasks: [ 'coding-style', 'unit-test' ]
+        }
+      ]
+    }
   };
 
 // Attach a function to the gulp singleton that computes all the files to
@@ -49,7 +77,25 @@ gulp.files = function( type ) {
 };
 
 // Create a list of the loaded tasks.
-tasks = Object.keys( gulp.tasks );
+taskNames = Object.keys( gulp.tasks );
+aggTaskNames = Object.keys( aggTasks );
+
+// Create the workflow tasks
+aggTaskNames.forEach( function( workflowName ) {
+  var workflowConfig = aggTasks[ workflowName ];
+
+  gulp.task( workflowName, workflowConfig.dependencies, function() {
+    workflowConfig.watches.forEach( function( watch ) {
+      gulp.watch(
+        watch.files.map( gulp.files ).reduce( function( a, b ) {
+          return a.concat( b );
+        } ),
+        watch.tasks
+      );
+    } );
+  } );
+
+} );
 
 // This is a development workflow
 gulp.task( 'medusa-gaze', [ 'serve' ], function() {
@@ -71,16 +117,39 @@ exports = module.exports = config;
 // Define a task dedicated to helping the user out.
 gulp.task( 'default', function() {
   var
-    message = [
-      '',
-      '  Available Tasks',
-      '  ---------------',
-      ''
-    ],
-    taskLines = tasks.map( function( name ) {
-      return '    ' + name;
-    } );
+    repeat = function( text, n ) {
+      return new Array( n + 1).join ( text );
+    },
+    indentTextN = function( n, text ) {
+      return n === 0 ? text : indentTextN( n - 1, indentText( text ) );
+    },
+    indentText = function( text ) {
+      return '  ' + text;
+    },
+    indent = function() {
+      var args = Array.prototype.slice.call( arguments );
+      return args.map( indentText )
+    },
+    title = function ( name ) {
+      return [ ].concat(
+        '',
+        indent(
+          name,
+          repeat( '-', name.length )
+        ),
+        ''
+      );
+    };
 
-  console.log( message.concat( taskLines ).concat( '' ).join( '\n' ) );
+  console.log(
+    [].concat(
+      title( 'Available Tasks' ),
+      taskNames.map( indentTextN.bind( null, 2 ) ),
+      '',
+      title( 'Workflows'),
+      aggTaskNames.map( indentTextN.bind( null, 2 ) ),
+      ''
+    ).join( '\n' )
+  );
 
 } );
