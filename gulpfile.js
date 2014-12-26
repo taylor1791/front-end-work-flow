@@ -23,7 +23,7 @@ var
     serve: [ ]
   },
 
-  // The workflow is purposfully extendable. Allowing other projects to add
+  // The workflow is purposefully extendible. Allowing other projects to add
   // files to validate treating them as first class citizens.
   additional = {
     package: [ ],
@@ -40,8 +40,8 @@ var
   };
 
 // Attach a function to the gulp singleton that computes all the files to
-// validate. This allows for the gulp tasks to be split accross multiple files
-// effectivle moving the focus from the individual tasks to the workflow.
+// validate. This allows for the gulp tasks to be split across multiple files
+// effectively moving the focus from the individual tasks to the workflow.
 gulp.files = function( type ) {
   return ( workflow[ type ] || [] ).concat(
     config.files[ type ] || []
