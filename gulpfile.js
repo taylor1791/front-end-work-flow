@@ -44,15 +44,15 @@ var
   // Define all the workflows
   // Create all the aggregate tasks or "workflows"
   aggTasks = {
-    'medusa-gaze': {
+    'siren-sing': {
       dependencies: [ 'serve' ],
       watches: [
         {
           files: [ 'node' ],
-          tasks: [ 'lint-node', 'coding-style' ]
+          tasks: [ 'lint-node' ]
         }, {
           files: [ 'browser' ],
-          tasks: [ 'lint-browser', 'coding-style', 'unit-test' ]
+          tasks: [ 'lint-browser', 'unit-test' ]
         }, {
           files: [ 'json' ],
           tasks: [ 'lint-json' ]
@@ -61,11 +61,19 @@ var
           tasks: [ 'lint-html' ]
         }, {
           files: [ 'unit' ],
-          tasks: [ 'coding-style', 'unit-test' ]
+          tasks: [ 'unit-test' ]
         }
       ]
     }
   };
+
+  // express medusa-gaze in terms of siren-song
+  aggTasks[ 'medusa-gaze' ] = JSON.parse( JSON.stringify( aggTasks[ 'siren-sing' ] ) );
+  aggTasks[ 'medusa-gaze' ].watches[ 0 ].tasks.push( 'coding-style' );
+  aggTasks[ 'medusa-gaze' ].watches[ 1 ].tasks.push( 'coding-style' );
+  aggTasks[ 'medusa-gaze' ].watches[ 4 ].tasks.push( 'coding-style' );
+
+
 
 // Attach a function to the gulp singleton that computes all the files to
 // validate. This allows for the gulp tasks to be split across multiple files
