@@ -67,13 +67,12 @@ var
     }
   };
 
-  // express medusa-gaze in terms of siren-song
-  aggTasks[ 'medusa-gaze' ] = JSON.parse( JSON.stringify( aggTasks[ 'siren-sing' ] ) );
-  aggTasks[ 'medusa-gaze' ].watches[ 0 ].tasks.push( 'coding-style' );
-  aggTasks[ 'medusa-gaze' ].watches[ 1 ].tasks.push( 'coding-style' );
-  aggTasks[ 'medusa-gaze' ].watches[ 4 ].tasks.push( 'coding-style' );
-
-
+// express medusa-gaze in terms of siren-song
+aggTasks[ 'medusa-gaze' ] =
+  JSON.parse( JSON.stringify( aggTasks[ 'siren-sing' ] ) );
+aggTasks[ 'medusa-gaze' ].watches[ 0 ].tasks.push( 'coding-style' );
+aggTasks[ 'medusa-gaze' ].watches[ 1 ].tasks.push( 'coding-style' );
+aggTasks[ 'medusa-gaze' ].watches[ 4 ].tasks.push( 'coding-style' );
 
 // Attach a function to the gulp singleton that computes all the files to
 // validate. This allows for the gulp tasks to be split across multiple files
@@ -132,7 +131,7 @@ exports = module.exports = config;
 gulp.task( 'default', function() {
   var
     repeat = function( text, n ) {
-      return new Array( n + 1).join ( text );
+      return new Array( n + 1 ).join ( text );
     },
     indentTextN = function( n, text ) {
       return n === 0 ? text : indentTextN( n - 1, indentText( text ) );
@@ -142,9 +141,9 @@ gulp.task( 'default', function() {
     },
     indent = function() {
       var args = Array.prototype.slice.call( arguments );
-      return args.map( indentText )
+      return args.map( indentText );
     },
-    title = function ( name ) {
+    title = function( name ) {
       return [ ].concat(
         '',
         indent(
@@ -160,7 +159,7 @@ gulp.task( 'default', function() {
       title( 'Available Tasks' ),
       taskNames.map( indentTextN.bind( null, 2 ) ),
       '',
-      title( 'Workflows'),
+      title( 'Workflows' ),
       aggTaskNames.map( indentTextN.bind( null, 2 ) ),
       ''
     ).join( '\n' )
