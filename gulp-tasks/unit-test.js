@@ -29,7 +29,9 @@ gulp.task( 'unit-test', function( done ) {
       libFiles.concat(
         gulp.files( 'unit' ),
         gulp.files( 'browser' )
-      );
+      ).filter( function( fileSpec ) {
+        return !/^!/.test( fileSpec );
+      } );
 
   karma.start( {
     configFile: __dirname + '/../karma.conf.js',
