@@ -17,6 +17,7 @@ gulp.task( 'lint-node', function() {
     config = JSON.parse( jshintrc );
 
   config.node = true;
+  config.globals = gulp.config( 'globals' );
 
   return gulp.src( files )
     .pipe( jshint( config ) )
@@ -31,6 +32,7 @@ gulp.task( 'lint-browser', function() {
     config = JSON.parse( jshintrc );
 
   config.browser = true;
+  config.globals = gulp.config( 'globals' );
 
   return gulp.src( files )
     .pipe( jshint( config ) )

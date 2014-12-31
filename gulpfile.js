@@ -84,6 +84,12 @@ gulp.files = function( type ) {
   );
 };
 
+// Attach a function to the gulp singleton that computes all retrieves
+// user configuration.
+gulp.config = function( key ) {
+  return config[ key ];
+};
+
 // Create a list of the loaded tasks.
 taskNames = Object.keys( gulp.tasks );
 aggTaskNames = Object.keys( aggTasks );

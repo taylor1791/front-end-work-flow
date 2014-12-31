@@ -62,6 +62,8 @@ Configuration
 `front-end-workflow` returns a `FEW Object`. Here is a complete list of all the
 available options for `FEW Objects`s.
 
+### globals
+
 ### files
 
 This is a name space for registering all the different files.
