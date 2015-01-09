@@ -10,7 +10,18 @@
 
 var
   gulp = require( 'gulp' ),
-  jscs = require( 'gulp-jscs' );
+  jscs = require( 'gulp-jscs' ),
+  jscsrc = require( 'fs' ).readFileSync( __dirname + '/../.jscsrc' ),
+
+  getConfig = function() {
+    var config = JSON.parse( jscsrc );
+
+    if ( gulp.config( 'esnext' ) ) {
+      config.esnext = true;
+    }
+
+    return config;
+  };
 
 gulp.task( 'coding-style', function() {
   // The unit files are not here becauase they can include external libraires
@@ -19,5 +30,5 @@ gulp.task( 'coding-style', function() {
       .concat( gulp.files( 'node' ) );
 
   return gulp.src( files )
-    .pipe( jscs( __dirname + '/../.jscsrc' ) );
+    .pipe( jscs( getConfig() ) );
 } );

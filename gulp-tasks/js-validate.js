@@ -9,12 +9,25 @@
 var
   gulp = require( 'gulp' ),
   jshint = require( 'gulp-jshint' ),
-  jshintrc = require( 'fs' ).readFileSync( __dirname + '/../.jshintrc' );
+  jshintrc = require( 'fs' ).readFileSync( __dirname + '/../.jshintrc' ),
+
+  getConfig = function() {
+    var config = JSON.parse( jshintrc );
+
+    if ( gulp.config( 'esnext' ) ) {
+      config.esnext = true;
+      config.strict = false;
+    }
+
+    config.esnext = gulp.config( 'esnext' ) || config.esnext;
+
+    return config;
+  };
 
 gulp.task( 'lint-node', function() {
   var
     files = gulp.files( 'node' ),
-    config = JSON.parse( jshintrc );
+    config = getConfig();
 
   config.node = true;
   config.globals = gulp.config( 'globals' );
@@ -29,7 +42,7 @@ gulp.task( 'lint-node', function() {
 gulp.task( 'lint-browser', function() {
   var
     files = gulp.files( 'browser' ),
-    config = JSON.parse( jshintrc );
+    config = getConfig();
 
   config.browser = true;
   config.globals = gulp.config( 'globals' );

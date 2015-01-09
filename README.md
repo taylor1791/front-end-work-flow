@@ -64,6 +64,10 @@ available options for `FEW Objects`s.
 
 ### globals
 
+### esnext
+
+Turns on es6 parsing on jshint and jscs.
+
 ### files
 
 This is a name space for registering all the different files.
