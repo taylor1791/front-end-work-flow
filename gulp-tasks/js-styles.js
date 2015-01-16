@@ -10,11 +10,11 @@
 
 var
   gulp = require( 'gulp' ),
-  jscs = require( 'gulp-jscs' ),
-  jscsrc = require( 'fs' ).readFileSync( __dirname + '/../.jscsrc' ),
 
   getConfig = function() {
-    var config = JSON.parse( jscsrc );
+    var
+      jscsrc = require( 'fs' ).readFileSync( __dirname + '/../.jscsrc' ),
+      config = JSON.parse( jscsrc );
 
     if ( gulp.config( 'esnext' ) ) {
       config.esnext = true;
@@ -23,9 +23,11 @@ var
     return config;
   };
 
+// The unit files are not here becauase they can include external libraires
 gulp.task( 'coding-style', function() {
-  // The unit files are not here becauase they can include external libraires
   var
+    jscs = require( 'gulp-jscs' ),
+
     files = gulp.files( 'browser' )
       .concat( gulp.files( 'node' ) );
 

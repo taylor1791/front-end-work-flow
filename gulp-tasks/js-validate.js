@@ -8,11 +8,11 @@
 
 var
   gulp = require( 'gulp' ),
-  jshint = require( 'gulp-jshint' ),
-  jshintrc = require( 'fs' ).readFileSync( __dirname + '/../.jshintrc' ),
 
   getConfig = function() {
-    var config = JSON.parse( jshintrc );
+    var
+      jshintrc = require( 'fs' ).readFileSync( __dirname + '/../.jshintrc' ),
+      config = JSON.parse( jshintrc );
 
     if ( gulp.config( 'esnext' ) ) {
       config.esnext = true;
@@ -26,6 +26,8 @@ var
 
 gulp.task( 'lint-node', function() {
   var
+    jshint = require( 'gulp-jshint' ),
+
     files = gulp.files( 'node' ),
     config = getConfig();
 
@@ -41,6 +43,8 @@ gulp.task( 'lint-node', function() {
 
 gulp.task( 'lint-browser', function() {
   var
+    jshint = require( 'gulp-jshint' ),
+
     files = gulp.files( 'browser' ),
     config = getConfig();
 

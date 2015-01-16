@@ -10,12 +10,13 @@
 'use strict';
 
 var
-  karma = require( 'karma' ).server,
   gulp  = require( 'gulp' );
 
 gulp.task( 'unit-test', function( done ) {
 
   var
+    karma = require( 'karma' ).server,
+
     libs = gulp.files( 'libraries' )[ 0 ],
     libFiles = Object.keys( libs ).map( function( libFile ) {
       var libFilePath = libs[ libFile ];

@@ -7,11 +7,10 @@
 
 'use strict';
 
-var
-  gulp = require( 'gulp' ),
-  browserSync = require( 'browser-sync' );
+var gulp = require( 'gulp' );
 
 gulp.task( 'serve', function() {
+  var browserSync = require( 'browser-sync' );
 
   // Other gulp tasks can trigger a broswer refresh by emitting a
   // `broswer-update` event.
