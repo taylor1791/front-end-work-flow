@@ -8,18 +8,19 @@
 
 var
   gulp = require( 'gulp' ),
+  fewu = require( './setup' ),
 
   getConfig = function() {
     var
       jshintrc = require( 'fs' ).readFileSync( __dirname + '/../.jshintrc' ),
       config = JSON.parse( jshintrc );
 
-    if ( gulp.config( 'esnext' ) ) {
+    if ( fewu.config( 'esnext' ) ) {
       config.esnext = true;
       config.strict = false;
     }
 
-    config.esnext = gulp.config( 'esnext' ) || config.esnext;
+    config.esnext = fewu.config( 'esnext' ) || config.esnext;
 
     return config;
   };
@@ -28,11 +29,11 @@ gulp.task( 'lint-node', function() {
   var
     jshint = require( 'gulp-jshint' ),
 
-    files = gulp.files( 'node' ),
+    files = fewu.files( 'node' ),
     config = getConfig();
 
   config.node = true;
-  config.globals = gulp.config( 'globals' );
+  config.globals = fewu.config( 'globals' );
 
   return gulp.src( files )
     .pipe( jshint( config ) )
@@ -45,11 +46,11 @@ gulp.task( 'lint-browser', function() {
   var
     jshint = require( 'gulp-jshint' ),
 
-    files = gulp.files( 'browser' ),
+    files = fewu.files( 'browser' ),
     config = getConfig();
 
   config.browser = true;
-  config.globals = gulp.config( 'globals' );
+  config.globals = fewu.config( 'globals' );
 
   return gulp.src( files )
     .pipe( jshint( config ) )

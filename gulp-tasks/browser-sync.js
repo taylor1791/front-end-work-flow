@@ -7,7 +7,10 @@
 
 'use strict';
 
-var gulp = require( 'gulp' );
+var
+  gulp = require( 'gulp' ),
+  R = require( 'ramda' ),
+  fewu = require( './setup' );
 
 gulp.task( 'serve', function() {
   var browserSync = require( 'browser-sync' );
@@ -21,12 +24,9 @@ gulp.task( 'serve', function() {
   browserSync( {
     port: process.env.PORT || undefined,
     server: {
-      baseDir: gulp.files( 'serve' ),
-      routes: gulp.files( 'libraries' )[0]
+      baseDir: fewu.config( 'root' ),
+      routes: R.mixin( fewu.files( 'devLibraries' ), fewu.files( 'libraries' ) )
     },
-    files: gulp.files( 'serve' ).map( function( dir ) {
-      return dir + '/**/*.*';
-    } ),
     watchOptions: {
       debounceDelay: 100
     },

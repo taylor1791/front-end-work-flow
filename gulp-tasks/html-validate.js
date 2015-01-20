@@ -7,13 +7,14 @@
 'use strict';
 
 var
-  gulp = require( 'gulp' );
+  gulp = require( 'gulp' ),
+  fewu = require( './setup' );
 
 gulp.task( 'lint-html', function() {
   var
     htmlhint = require( 'gulp-htmlhint' ),
 
-    files = gulp.files( 'html' );
+    files = fewu.files( 'html' );
 
   return gulp.src( files )
     .pipe( htmlhint( {

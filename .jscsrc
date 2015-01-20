@@ -4,7 +4,7 @@
     "if", "else", "for", "while", "do", "try", "catch", "case", "default"
    ],
   "requireSpaceAfterKeywords": [
-    "if", "else", "for", "while", "do", "try", "catch", "case", "default"
+    "else", "for", "while", "do", "try", "catch", "case", "default"
    ],
   "requireSpaceBeforeBlockStatements": true,
   "requireParenthesesAroundIIFE": true,

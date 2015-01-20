@@ -62,11 +62,26 @@ Configuration
 `front-end-workflow` returns a `FEW Object`. Here is a complete list of all the
 available options for `FEW Objects`s.
 
+
+
+
+
+
+
+
 ### globals
 
 ### esnext
 
 Turns on es6 parsing on jshint and jscs.
+
+### root
+
+### angular
+
+#### module
+
+#### root
 
 ### files
 
@@ -86,25 +101,25 @@ This is a name space for registering all the different files.
 
     node: [ './gulpfile.js' ]
 
+#### json
+
+    json: [ './package.json' ]
+
 #### browser
 
     browser: []
 
-#### json
-
-    json: [ './package.json' ]
+#### css
 
 #### html
 
     html: []
 
+#### static
+
 #### unit
 
     unit: []
-
-#### serve
-
-   serve: './app',
 
 #### libraries
 
@@ -114,8 +129,12 @@ This is a name space for registering all the different files.
      }
    };
 
+#### devLibraries
+
 TODO
 ----
+
+// TODO use node's path module
 
 // TODO gulp task for tunnel
 
@@ -125,29 +144,9 @@ TODO
 // TODO pagespeed
 // TODO Code coverage
 
-// Angular Specific
-// TODO gulp-ngAnnotate
-// TODO gulp-angular-templatecache
-// TODO controlAPIPreviewServer
-// TODO buildAPIDocs
-
-// Testing
-// TODO controlE2ETestServer
-// TODO controlSeleniumServer
-
-// Semi-Build
-// TODO generateSprites
-// TODO compileLESS
-// TODO gulp-autoprefixer
-
 // Build
-// TODO injectCodeHedaer
-// TODO uglify
-// TODO conctenation
-// TODO html minify
-// TODO image minification
-// TODO userref
 // TODO data-uri example
 // TODO CSS Sprite generation
+
 
 // TODO look https://github.com/google/web-starter-kit/blob/master/gulpfile.js

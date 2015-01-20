@@ -7,13 +7,14 @@
 'use strict';
 
 var
-  gulp = require( 'gulp' );
+  gulp = require( 'gulp' ),
+  fewu = require( './setup' );
 
 gulp.task( 'lint-json', function() {
   var
     jsonlint = require( 'gulp-jsonlint' ),
 
-    files = gulp.files( 'json' );
+    files = fewu.files( 'json' );
 
   return gulp.src( files )
     .pipe( jsonlint() )

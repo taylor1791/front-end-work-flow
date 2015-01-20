@@ -10,13 +10,14 @@
 
 var
   gulp = require( 'gulp' ),
+  fewu = require( './setup' ),
 
   getConfig = function() {
     var
       jscsrc = require( 'fs' ).readFileSync( __dirname + '/../.jscsrc' ),
       config = JSON.parse( jscsrc );
 
-    if ( gulp.config( 'esnext' ) ) {
+    if ( fewu.config( 'esnext' ) ) {
       config.esnext = true;
     }
 
@@ -24,12 +25,12 @@ var
   };
 
 // The unit files are not here becauase they can include external libraires
-gulp.task( 'coding-style', function() {
+gulp.task( 'js-styles', function() {
   var
     jscs = require( 'gulp-jscs' ),
 
-    files = gulp.files( 'browser' )
-      .concat( gulp.files( 'node' ) );
+    files = fewu.files( 'browser' )
+      .concat( fewu.files( 'node' ) );
 
   return gulp.src( files )
     .pipe( jscs( getConfig() ) );

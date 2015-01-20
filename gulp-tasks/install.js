@@ -1,7 +1,6 @@
 //
-// This script creates the install task and attempt to add other gulp tasks.
-// If it fails, then will tell the user to run gulp install.
-//
+// This script creates the install task and its only dependencies are
+// gulp and npm.
 
 'use strict';
 
@@ -23,7 +22,7 @@ var
 
   },
 
-  // Create an array of node packages dependencies from a package.json
+  // Create an array of node package dependencies from a package.json
   createDepArr = function( packageJson ) {
     var
       deps = packageJson.dependencies || {},
@@ -34,6 +33,7 @@ var
 
   npm   = require( 'npm' ),
   gulp  = require( 'gulp' ),
+  fewu = require( './setup' ),
   gutil = require(
     process.cwd() + '/node_modules/gulp/node_modules/gulp-util'
   );
@@ -41,12 +41,11 @@ var
 // This task will use npm to  install all the dependencies for all
 // registered `package.json` files.
 gulp.task( 'install', function( cb ) {
-
   npm.load( { loaded: false }, function( err ) {
 
-    var dependencies = [].concat.apply(
-      [],
-      gulp.files( 'package' ).map( require ).map( createDepArr )
+    var dependencies = [].concat.apply( [],
+      fewu.defaults.files[ 'package' ].concat( '../package.json' )
+        .map( require ).map( createDepArr )
     );
 
     if ( err ) {
@@ -71,21 +70,10 @@ gulp.task( 'install', function( cb ) {
       gutil.log(
         gutil.colors.cyan( 'FEW: Installing workflow dependencies complete.' )
       );
+
     } );
 
   } );
-
 } );
 
-try {
-  require( 'require-dir' )( '.' );
-} catch ( e ) {
-
-  gutil.log(
-    gutil.colors.red(
-      'FEW: Dependencies are not installed. Please run gulp install.\n'
-    )
-  );
-}
-
-module.exports = gulp;
+module.exports = gutil;

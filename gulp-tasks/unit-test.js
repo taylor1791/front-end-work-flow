@@ -10,14 +10,16 @@
 'use strict';
 
 var
-  gulp  = require( 'gulp' );
+  gulp  = require( 'gulp' ),
+  R = require( 'ramda' ),
+  fewu = require( './setup' );
 
 gulp.task( 'unit-test', function( done ) {
 
   var
     karma = require( 'karma' ).server,
 
-    libs = gulp.files( 'libraries' )[ 0 ],
+    libs = R.mixin( fewu.files( 'libraries' ), fewu.files( 'devLibraries' ) ),
     libFiles = Object.keys( libs ).map( function( libFile ) {
       var libFilePath = libs[ libFile ];
 
@@ -28,8 +30,8 @@ gulp.task( 'unit-test', function( done ) {
 
     files =
       libFiles.concat(
-        gulp.files( 'unit' ),
-        gulp.files( 'browser' )
+        fewu.files( 'unit' ),
+        fewu.files( 'browser' )
       ).filter( function( fileSpec ) {
         return !/^!/.test( fileSpec );
       } );
