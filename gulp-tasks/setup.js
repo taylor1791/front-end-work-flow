@@ -110,7 +110,7 @@ if( !err ) {
   };
 
   // The build task
-  aggTasks[ 'cyclops-whack' ] = {
+  aggTasks[ 'cyclops-crush' ] = {
     dependencies: [ 'build-html' ]
   };
 
