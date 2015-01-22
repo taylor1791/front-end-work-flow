@@ -24,12 +24,17 @@ gulp.task( 'build-css', [ 'build-clean' ], function() {
     less    = require( 'gulp-less' ),
     prefix  = require( 'gulp-autoprefixer' ),
     csso    = require( 'gulp-csso' ),
-    concat  = require( 'gulp-concat' );
+    concat  = require( 'gulp-concat' ),
     // TODO #2 rev     = require( 'gulp-rev' );
+
+    lessPaths = [ process.cwd() + '/node_modules/' ];
 
   return gulp.src( fewu.files( 'css' ) )
     // TODO #1 .pipe( maps.init() )
-    .pipe( less( { paths: [ './node_modules/' ] } ) )
+    .pipe( less( { paths: lessPaths } ) )
+    .on( 'error', function() {
+      console.log( arguments );
+    } )
     .pipe( prefix( fewu.config( 'build.cssAutoprefix' ) ) )
     .pipe( csso() )
     .pipe( concat( fewu.config( 'build.css' ) ) )
