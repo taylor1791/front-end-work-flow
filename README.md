@@ -39,9 +39,9 @@ development+
 
 ### manticore-sting
 
-benchmark
+benchmark and test
 
-### cyclops-whack
+### cyclops-crush
 
 build
 
@@ -143,6 +143,6 @@ TODO
 // Build
 // TODO data-uri example
 // TODO CSS Sprite generation
-
+// File replace
 
 // TODO look https://github.com/google/web-starter-kit/blob/master/gulpfile.js

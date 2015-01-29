@@ -96,11 +96,14 @@ if( !err ) {
     ]
   };
 
+  // A single run of all tests
+  aggTasks[ 'manticore-sting' ] = {
+    dependencies: [ 'lint-json', 'lint-html', 'lint-browser', 'lint-node', 'js-styles', 'unit-test' ]
   };
 
   // The build task
   aggTasks[ 'cyclops-crush' ] = {
-    dependencies: [ 'build-html' ]
+    dependencies: [ 'build-js', 'build-css', 'build-html', 'copy-assets' ]
   };
 
   // The deploy task
