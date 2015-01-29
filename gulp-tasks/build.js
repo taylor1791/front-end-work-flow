@@ -116,7 +116,7 @@ gulp.task( 'build-html', [ 'build-css', 'build-js' ], function() {
     htmlMin = require( 'gulp-minify-html' ),
     imageMin = require( 'gulp-imagemin' ),
 
-    staticFiles = gulp.src( fewu.files( 'static' ) )
+    staticFiles = gulp.src( fewu.config( 'build.static' ) )
       .pipe( imageMin( {
         optimizationLevel: 7,
         progressive: true,

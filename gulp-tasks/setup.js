@@ -46,13 +46,13 @@ module.exports.defaults = {
     browser: [ ],
     css: [ ],
     html: [ ],
-    'static': [ ],
     unit: [ ],
     libraries: { },
     devLibraries: { }
   },
   build: {
     directory: './dist/',
+    'static': {},
     js: 'app.js',
     css: 'style.css',
     header: [ '/**',

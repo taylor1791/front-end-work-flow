@@ -111,8 +111,6 @@ This is a name space for registering all the different files.
 
     html: []
 
-#### static
-
 #### unit
 
     unit: []
