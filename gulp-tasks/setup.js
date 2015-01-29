@@ -74,15 +74,15 @@ if( !err ) {
   //
 
   // The standard development workflow
-  aggTasks[ 'siren-sing' ] =  {
+  aggTasks[ 'medusa-gaze' ] = {
     dependencies: [ 'serve' ],
     watches: [
       {
         files: [ 'node' ],
-        tasks: [ 'lint-node' ]
+        tasks: [ 'lint-node', 'js-styles' ]
       }, {
         files: [ 'browser' ],
-        tasks: [ 'lint-browser', 'unit-test' ]
+        tasks: [ 'lint-browser', 'unit-test', 'js-styles' ]
       }, {
         files: [ 'json' ],
         tasks: [ 'lint-json' ]
@@ -91,22 +91,11 @@ if( !err ) {
         tasks: [ 'lint-html' ]
       }, {
         files: [ 'unit' ],
-        tasks: [ 'unit-test' ]
+        tasks: [ 'unit-test', 'js-styles' ]
       }
     ]
   };
 
-  // The "enhanced" development workflow
-  aggTasks[ 'medusa-gaze' ] = R.cloneDeep( aggTasks[ 'siren-sing' ] );
-  aggTasks[ 'medusa-gaze' ].watches[ 0 ].tasks.push( 'js-styles' );
-  aggTasks[ 'medusa-gaze' ].watches[ 1 ].tasks.push( 'js-styles' );
-  aggTasks[ 'medusa-gaze' ].watches[ 4 ].tasks.push( 'js-styles' );
-
-  // The benchmark/E2E testing
-  aggTasks[ 'manticore-sting' ] = function() {
-    gutil.log(
-      gutil.colors.red( 'FEW: manticore-sting is not yet implemented' )
-    );
   };
 
   // The build task

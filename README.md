@@ -33,10 +33,6 @@ project as well. See the configuration section for more details.
 Workflows
 ---------
 
-### siren-sing
-
-development
-
 ### medusa-gaze
 
 development+
