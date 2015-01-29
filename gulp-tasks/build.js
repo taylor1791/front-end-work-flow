@@ -106,23 +106,11 @@ gulp.task( 'build-js', [ 'build-clean' ], function() {
 
 } );
 
-gulp.task( 'build-html', [ 'build-css', 'build-js' ], function() {
+gulp.task( 'build-html', [ 'build-clean' ], function() {
 
-// TODO image minification
   var
-    merge   = require( 'merge-stream' ),
-
     htmlreplace = require( 'gulp-html-replace' ),
     htmlMin = require( 'gulp-minify-html' ),
-    imageMin = require( 'gulp-imagemin' ),
-
-    staticFiles = gulp.src( fewu.config( 'build.static' ) )
-      .pipe( imageMin( {
-        optimizationLevel: 7,
-        progressive: true,
-        interlaced: true
-      } ) )
-      .pipe( gulp.dest( fewu.config( 'build.directory' ) ) ),
 
     indexBuild = gulp.src( fewu.config( 'root' ) + '/index.html' )
       .pipe( htmlreplace( {
@@ -131,6 +119,30 @@ gulp.task( 'build-html', [ 'build-css', 'build-js' ], function() {
       .pipe( htmlMin( { conditionals: true } ) )
       .pipe( gulp.dest( fewu.config( 'build.directory' ) ) );
 
-  return merge( indexBuild, staticFiles );
+  return indexBuild;
+
+} );
+
+gulp.task( 'copy-assets', [ 'build-clean' ], function() {
+    var
+      merge   = require( 'merge-stream' ),
+      imageMin = require( 'gulp-imagemin' ),
+
+      staticAssetPaths = fewu.config( 'build.static' ),
+      staticAssets = Object.keys( staticAssetPaths ),
+      assetStreams = staticAssets.map( function( pattern ) {
+
+        return gulp.src( pattern )
+          .pipe( imageMin( {
+            optimizationLevel: 7,
+            progressive: true,
+            interlaced: true
+          } ) )
+          .pipe( gulp.dest(
+            fewu.config( 'build.directory' ) + staticAssetPaths[ pattern ]
+          ) );
+      } );
+
+    return merge.apply( null, assetStreams );
 
 } );
