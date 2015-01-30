@@ -4,7 +4,6 @@
 
 'use strict';
 
-// TODO #1 Sourcemaps for CSS: Waiting for CSSO to support gulp-sourcemaps
 // TODO #2 Wait for bug fix in gulp-rev relating to destination of manifest
 // TODO #3 Remove gulp-addsrc when contra fixed issue gulpjs/gulp/issues/840
 
@@ -22,6 +21,7 @@ gulp.task( 'build-css', [ 'build-clean' ], function() {
 
   var
     less    = require( 'gulp-less' ),
+    maps    = require( 'gulp-sourcemaps' ),
     prefix  = require( 'gulp-autoprefixer' ),
     cssMin  = require( 'gulp-minify-css' ),
     concat  = require( 'gulp-concat' ),
@@ -30,7 +30,7 @@ gulp.task( 'build-css', [ 'build-clean' ], function() {
     lessPaths = [ process.cwd() + '/node_modules/' ];
 
   return gulp.src( fewu.files( 'css' ) )
-    // TODO #1 .pipe( maps.init() )
+    .pipe( maps.init() )
     .pipe( less( { paths: lessPaths } ) )
     .on( 'error', function() {
       console.log( arguments );
@@ -38,7 +38,7 @@ gulp.task( 'build-css', [ 'build-clean' ], function() {
     .pipe( prefix( fewu.config( 'build.cssAutoprefix' ) ) )
     .pipe( cssMin() )
     .pipe( concat( fewu.config( 'build.css' ) ) )
-    // TODO #1 .pipe( maps.write() )
+    .pipe( maps.write( '.' ) )
     // TODO #2 .pipe( rev() )
     .pipe( gulp.dest( fewu.config( 'build.directory' ) ) );
     // TODO #2 .pipe( rev.manifest( 'rev-manifest.json', { merge: true } ) )
@@ -59,7 +59,7 @@ gulp.task( 'build-js', [ 'build-clean' ], function() {
     ngAnnotate = require( 'gulp-ng-annotate' ),
     uglify  = require( 'gulp-uglify' ),
     concat  = require( 'gulp-concat' ),
-    // TODO #1 rev     = require( 'gulp-rev' ),
+    // TODO #2 rev     = require( 'gulp-rev' ),
 
     libs = fewu.files( 'libraries' ),
     libFiles = Object.keys( libs ).map( function( libFile ) {
