@@ -4,7 +4,6 @@
 
 'use strict';
 
-// TODO #2 Wait for bug fix in gulp-rev relating to destination of manifest
 // TODO #3 Remove gulp-addsrc when contra fixed issue gulpjs/gulp/issues/840
 
 var
@@ -25,8 +24,9 @@ gulp.task( 'build-css', [ 'build-clean' ], function() {
     prefix  = require( 'gulp-autoprefixer' ),
     cssMin  = require( 'gulp-minify-css' ),
     concat  = require( 'gulp-concat' ),
-    // TODO #2 rev     = require( 'gulp-rev' );
+    rev     = require( 'gulp-rev' ),
 
+    buildDir  = fewu.config( 'build.directory' ),
     lessPaths = [ process.cwd() + '/node_modules/' ];
 
   return gulp.src( fewu.files( 'css' ) )
@@ -38,11 +38,14 @@ gulp.task( 'build-css', [ 'build-clean' ], function() {
     .pipe( prefix( fewu.config( 'build.cssAutoprefix' ) ) )
     .pipe( cssMin() )
     .pipe( concat( fewu.config( 'build.css' ) ) )
+    .pipe( rev() )
     .pipe( maps.write( '.' ) )
-    // TODO #2 .pipe( rev() )
-    .pipe( gulp.dest( fewu.config( 'build.directory' ) ) );
-    // TODO #2 .pipe( rev.manifest( 'rev-manifest.json', { merge: true } ) )
-    // TODO #2 .pipe( gulp.dest( gulp.config( 'build' ) ) );
+    .pipe( gulp.dest( buildDir ) )
+    .pipe( rev.manifest( buildDir + '/rev-manifest.json', {
+      base: buildDir + '/',
+      merge: true
+    } ) )
+    .pipe( gulp.dest( buildDir ) );
 
 } );
 
@@ -59,8 +62,9 @@ gulp.task( 'build-js', [ 'build-clean' ], function() {
     ngAnnotate = require( 'gulp-ng-annotate' ),
     uglify  = require( 'gulp-uglify' ),
     concat  = require( 'gulp-concat' ),
-    // TODO #2 rev     = require( 'gulp-rev' ),
+    rev     = require( 'gulp-rev' ),
 
+    buildDir  = fewu.config( 'build.directory' ),
     libs = fewu.files( 'libraries' ),
     libFiles = Object.keys( libs ).map( function( libFile ) {
       var libFilePath = libs[ libFile ];
@@ -88,36 +92,38 @@ gulp.task( 'build-js', [ 'build-clean' ], function() {
     .pipe( gulpif( !!fewu.config( 'angular.module' ), ngAnnotate() ) )
     .pipe( uglify( { } ) )
     .pipe( concat( fewu.config( 'build.js' ) ) )
-    .pipe( header(
-      fewu.config( 'build.header' ),
-      {
-        pkg: require( process.cwd() + '/package' ),
-        date: new Date()
-      }
-    ) )
-    // TODO #2 .pipe( rev() )
+    .pipe( header( fewu.config( 'build.header' ), {
+      pkg: require( process.cwd() + '/package' ),
+      date: new Date()
+    } ) )
+    .pipe( rev() )
     .pipe( maps.write( '.' ) )
-    .pipe( gulp.dest( fewu.config( 'build.directory' ) ) );
-    // TODO #2 .pipe( rev.manifest( {
-    // TODO #2   base: 'dist/',
-    // TODO #2   merge: true
-    // TODO #2 } ) )
-    // TODO #2 .pipe( gulp.dest( 'dist/' ) );
+    .pipe( gulp.dest( buildDir ) )
+    .pipe( rev.manifest( buildDir + '/rev-manifest.json', {
+      base: buildDir + '/',
+      merge: true
+    } ) )
+    .pipe( gulp.dest( buildDir ) );
 
 } );
 
-gulp.task( 'build-html', [ 'build-clean' ], function() {
+gulp.task( 'build-html', [ 'build-js', 'build-css', 'build-clean' ], function() {
 
   var
     htmlreplace = require( 'gulp-html-replace' ),
     htmlMin = require( 'gulp-minify-html' ),
 
+    buildDir = fewu.config( 'build.directory' ),
+    fileReves = require( '../../' + buildDir + '/rev-manifest.json' ),
+
     indexBuild = gulp.src( fewu.config( 'root' ) + '/index.html' )
       .pipe( htmlreplace( {
-        js: fewu.config( 'build.js' ), css: fewu.config( 'build.css' )
+        js: fileReves[ fewu.config( 'build.js' ) ],
+        css: fileReves[ fewu.config( 'build.css' ) ]
       } ) )
       .pipe( htmlMin( { conditionals: true } ) )
       .pipe( gulp.dest( fewu.config( 'build.directory' ) ) );
+
 
   return indexBuild;
 
