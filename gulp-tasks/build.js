@@ -23,7 +23,7 @@ gulp.task( 'build-css', [ 'build-clean' ], function() {
   var
     less    = require( 'gulp-less' ),
     prefix  = require( 'gulp-autoprefixer' ),
-    csso    = require( 'gulp-csso' ),
+    cssMin  = require( 'gulp-minify-css' ),
     concat  = require( 'gulp-concat' ),
     // TODO #2 rev     = require( 'gulp-rev' );
 
@@ -36,7 +36,7 @@ gulp.task( 'build-css', [ 'build-clean' ], function() {
       console.log( arguments );
     } )
     .pipe( prefix( fewu.config( 'build.cssAutoprefix' ) ) )
-    .pipe( csso() )
+    .pipe( cssMin() )
     .pipe( concat( fewu.config( 'build.css' ) ) )
     // TODO #1 .pipe( maps.write() )
     // TODO #2 .pipe( rev() )
