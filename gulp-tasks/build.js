@@ -1,5 +1,4 @@
 // Build
-// TODO data-uri example
 // TODO CSS Sprite generation
 
 'use strict';

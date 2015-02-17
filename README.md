@@ -125,6 +125,14 @@ This is a name space for registering all the different files.
 
 #### devLibraries
 
+
+FAQ
+---
+
+### How do I use data-uris?
+
+Data URIs are built into LESS using the data-uri function.
+
 TODO
 ----
 
