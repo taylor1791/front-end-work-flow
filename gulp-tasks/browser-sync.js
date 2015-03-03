@@ -25,7 +25,7 @@ gulp.task( 'serve', function() {
     port: process.env.PORT || undefined,
     server: {
       baseDir: fewu.config( 'root' ),
-      routes: R.mixin( fewu.files( 'devLibraries' ), fewu.files( 'libraries' ) )
+      routes: R.merge( fewu.files( 'devLibraries' ), fewu.files( 'libraries' ) )
     },
     watchOptions: {
       debounceDelay: 100

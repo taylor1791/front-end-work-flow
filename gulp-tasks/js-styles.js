@@ -9,13 +9,21 @@
 'use strict';
 
 var
+  fs   = require( 'fs' ),
   gulp = require( 'gulp' ),
   fewu = require( './setup' ),
+  R    = require( 'ramda' ),
 
   getConfig = function() {
     var
-      jscsrc = require( 'fs' ).readFileSync( __dirname + '/../.jscsrc' ),
-      config = JSON.parse( jscsrc );
+      customRcPath = process.cwd() + '/' + fewu.config( 'jscsrc' ),
+
+      jscsrc = JSON.parse( fs.readFileSync( __dirname + '/../.jscsrc' ) ),
+      fileCustomRC = !fs.exists( customRcPath ) ?
+        {} : JSON.parse( fs.readFileSync( customRcPath ) ),
+      manualRC = fewu.config( 'jscsrc' ),
+
+    config = R.reduce( R.merge, {}, [ jscsrc, fileCustomRC, manualRC ] );
 
     if ( fewu.config( 'esnext' ) ) {
       config.esnext = true;

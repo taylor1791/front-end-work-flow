@@ -34,6 +34,10 @@ module.exports.defaults = {
   globals: { },
   esnext: false,
   root: './app/',
+  jshintrc: '.jshintrc',
+  jscsrc: '.jscsrc',
+  jshint: { },
+  jscs: { },
   angular: {
     enabled: false,
     module: 'app',
@@ -98,7 +102,10 @@ if( !err ) {
 
   // A single run of all tests
   aggTasks[ 'manticore-sting' ] = {
-    dependencies: [ 'lint-json', 'lint-html', 'lint-browser', 'lint-node', 'js-styles', 'unit-test' ]
+    dependencies: [
+      'lint-json', 'lint-html', 'lint-browser', 'lint-node',
+      'js-styles', 'unit-test'
+    ]
   };
 
   // The build task

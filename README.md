@@ -133,6 +133,9 @@ FAQ
 
 Data URIs are built into LESS using the data-uri function.
 
+### How can I use custom jshint or jscs config
+
+
 TODO
 ----
 

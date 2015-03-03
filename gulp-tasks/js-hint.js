@@ -7,13 +7,21 @@
 'use strict';
 
 var
+  fs   = require( 'fs' ),
   gulp = require( 'gulp' ),
   fewu = require( './setup' ),
+  R    = require( 'ramda' ),
 
   getConfig = function() {
     var
-      jshintrc = require( 'fs' ).readFileSync( __dirname + '/../.jshintrc' ),
-      config = JSON.parse( jshintrc );
+      customRcPath = process.cwd() + '/' + fewu.config( 'jshintrc' ),
+
+      jshintrc = JSON.parse( fs.readFileSync( __dirname + '/../.jshintrc' ) ),
+      fileCustomRC = !fs.exists( customRcPath ) ?
+        {} : JSON.parse( fs.readFileSync( customRcPath ) ),
+      manualRC = fewu.config( 'jshintrc' ),
+
+      config = R.reduce( R.merge, {}, [ jshintrc, fileCustomRC, manualRC ] );
 
     if ( fewu.config( 'esnext' ) ) {
       config.esnext = true;
