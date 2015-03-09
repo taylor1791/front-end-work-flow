@@ -48,7 +48,7 @@
     "karma-jasmine": "^0.3.2",
     "karma-phantomjs-launcher": "^0.1.4",
     "merge-stream": "^0.1.7",
-    "ramda": "^0.9.1",
+    "ramda": "0.10.0",
     "require-dir": "^0.1.0"
   }
 }
