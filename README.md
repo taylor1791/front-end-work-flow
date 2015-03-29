@@ -10,25 +10,17 @@ addition, workflows exist that facilitate development.
 Usage
 -----
 
-Once understood, the Front-End-Workflow is simple to use. First clone the
-[repository](http://github.com/taylor1791/Front-End-Workflow) into the project
-directory (I recommend using `git submodule`s) and create a `Gulpfile.js` with
-the following contents.
+Once understood, the Front-End-Workflow is simple to use. Simply run the
+following commands.
 
-    var few = require( './front-end-workflow/gulpfile.js' );
+    $ npm install gulp front-end-work-flow --save-dev
+
+Then, create a gulpfile with the following contents.
+
+    var few = require( 'front-end-work-flow/gulpfile.js' );
 
 After making sure a local gulp exists (`npm install gulp`), typing `gulp` will
-print a list of the available tasks. If dependencies are missing, `gulp install`
-will be the only available command. This will use `npm` to programatically
-install the dependencies of all registered `package.json` files. To register a
-`package.json` use the following code.
-
-    var few == require( './front-end-workflow/gulpfile.js' );
-
-    few.files.package: [ __dirname + '/package.json' ];
-
-Now, `gulp install` will also install all the dependencies for the current
-project as well. See the configuration section for more details.
+print a list of the available tasks.
 
 Workflows
 ---------
@@ -83,15 +75,9 @@ Turns on es6 parsing on jshint and jscs.
 
 This is a name space for registering all the different files.
 
-    var few = require( './front-end-workflow/gulpfile.js' );
+    var few = require( 'front-end-work-flow/gulpfile.js' );
 
-    few.files = {
-      package: [ __dirname + '/package.json' ]
-    };
-
-#### package
-
-   package: [ __dirname + '/package.json' ]
+    few.files = { };
 
 #### node
 

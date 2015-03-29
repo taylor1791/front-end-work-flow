@@ -21,7 +21,7 @@ gulp.task( 'unit-test', function( done ) {
 
     libs = R.merge( fewu.files( 'libraries' ), fewu.files( 'devLibraries' ) ),
     libFiles = Object.keys( libs ).map( function( libFile ) {
-      var libFilePath = libs[ libFile ];
+      var libFilePath = process.cwd() + '/' + libs[ libFile ];
 
       return /\/$/.test( libFilePath ) ?
         libFilePath + '**/*.{js,css}' :
@@ -30,8 +30,8 @@ gulp.task( 'unit-test', function( done ) {
 
     files =
       libFiles.concat(
-        fewu.files( 'unit' ),
-        fewu.files( 'browser' )
+        fewu.files( 'unit' ).map( R.concat( process.cwd() + '/' ) ),
+        fewu.files( 'browser' ).map( R.concat( process.cwd() + '/' ) )
       ).filter( function( fileSpec ) {
         return !/^!/.test( fileSpec );
       } );
