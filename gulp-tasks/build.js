@@ -1,9 +1,8 @@
 // Build
 // TODO CSS Sprite generation
+// TODO #3 Remove gulp-addsrc when contra fixed issue gulpjs/gulp/issues/840
 
 'use strict';
-
-// TODO #3 Remove gulp-addsrc when contra fixed issue gulpjs/gulp/issues/840
 
 var
   gulp = require( 'gulp' ),
@@ -32,7 +31,7 @@ gulp.task( 'build-css', [ 'build-clean' ], function() {
     .pipe( maps.init() )
     .pipe( less( { paths: lessPaths } ) )
     .on( 'error', function() {
-      console.log( arguments );
+      console.error( 'error compiling less...', arguments );
     } )
     .pipe( prefix( fewu.config( 'build.cssAutoprefix' ) ) )
     .pipe( cssMin() )
@@ -107,14 +106,14 @@ gulp.task( 'build-js', [ 'build-clean' ], function() {
 } );
 
 gulp.task( 'build-html',
-  [ 'build-js', 'build-css', 'build-clean' ], function() {
+  [ 'build-js', 'build-css', 'create-manifest', 'build-clean' ], function() {
 
     var
       htmlreplace = require( 'gulp-html-replace' ),
       htmlMin = require( 'gulp-minify-html' ),
 
-      buildDir = fewu.config( 'build.directory' ),
-      fileReves = require( '../../' + buildDir + '/rev-manifest.json' ),
+      buildDir = process.cwd() + '/' + fewu.config( 'build.directory' ),
+      fileReves = require( buildDir + '/rev-manifest.json' ),
 
       indexBuild = gulp.src( fewu.config( 'root' ) + '/index.html' )
         .pipe( htmlreplace( {
@@ -129,9 +128,34 @@ gulp.task( 'build-html',
   }
 );
 
+gulp.task( 'create-manifest', [ 'build-js', 'build-css' ], function() {
+
+  var
+    buildDir = fewu.config( 'build.directory' ),
+    manifestPath = process.cwd() + '/' + buildDir + '/rev-manifest.json',
+    fileRevs = require( manifestPath ),
+    run = require( 'gulp-run' ),
+    buffer = require( 'gulp-buffer' ),
+    es = require( 'event-stream' );
+
+  return run( 'git rev-parse HEAD' )
+    .exec()
+    .pipe( buffer() )
+    .pipe( es.map( function( data, cb ) {
+      fileRevs.date = new Date();
+      fileRevs.hash = data.contents.toString( 'ascii' ).replace( '\n', '' );
+
+      data.path = 'rev-manifest.json';
+      data.contents = new Buffer( JSON.stringify( fileRevs, null, 2 ) );
+
+      cb( null, data );
+    } ) )
+    .pipe( gulp.dest( fewu.config( 'build.directory' ) ) );
+} );
+
 gulp.task( 'copy-assets', [ 'build-clean' ], function() {
   var
-    merge   = require( 'merge-stream' ),
+    merge   = require( 'event-stream' ).merge,
     imageMin = require( 'gulp-imagemin' ),
 
     staticAssetPaths = fewu.config( 'build.static' ),
