@@ -19,7 +19,7 @@ gulp.task( 'unit-test', function( done ) {
   var
     karma = require( 'karma' ).server,
 
-    libs = R.merge( fewu.files( 'libraries' ), fewu.files( 'devLibraries' ) ),
+    libs = fewu.files( 'libraries' ),
     libFiles = Object.keys( libs ).map( function( libFile ) {
       var libFilePath = process.cwd() + '/' + libs[ libFile ];
 
