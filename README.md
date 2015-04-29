@@ -13,9 +13,11 @@ Usage
 Once understood, the Front-End-Workflow is simple to use. Simply run the
 following commands.
 
-    $ npm install gulp front-end-work-flow --save-dev
+    $ npm install --save-dev git+http://github.com/taylor1719/front-end-work-flow#develop --save-dev
 
-Then, create a gulpfile with the following contents.
+Note that you are installing it directly from github. When a test suite exists
+to prevent against regression, it will be published on github. Then, create a
+gulpfile with the following contents.
 
     var few = require( 'front-end-work-flow/gulpfile.js' );
 
@@ -33,7 +35,7 @@ code styling. Unit tests are also run.
 
 ### manticore-sting
 
-This runs everything mentioned `medusa-gaze` except the developement server, 
+This runs everything mentioned `medusa-gaze` except the developement server,
 functioning as a test suite.
 
 ### cyclops-crush
@@ -120,12 +122,28 @@ TODO
 
 // TODO use gulp-watch instead of gulp.watch
 // TODO Add options to disable browser sync
+// TODO Don't open new window
 // TODO what borked auto-refresh
 // TODO gulp flag for tunnel
+// TODO Shell completion
 // TODO gulp task no open
 // TODO gulp-rev-all
 // TODO build standalone static development
 
+// TODO? Replace Text
+// TODO? Inject
+// TODO? sprites?
+// TODO? backstop.js
+// TODO? E2E
+// TODO? style Docco
+// TODO? style-guide
+//
+// Document
+// - minimatch
+// - humans.txt
+//  - contributors (git shortlog -s -n)
+//  - PM - HTML5 Boilerplate
+//
 // Analysis
 // TODO codebaseStats - plato
 // TODO overtime
