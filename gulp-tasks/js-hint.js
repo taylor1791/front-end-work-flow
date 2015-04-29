@@ -17,9 +17,9 @@ var
       customRcPath = process.cwd() + '/' + fewu.config( 'jshintrc' ),
 
       jshintrc = JSON.parse( fs.readFileSync( __dirname + '/../.jshintrc' ) ),
-      fileCustomRC = !fs.exists( customRcPath ) ?
+      fileCustomRC = !fs.existsSync( customRcPath ) ?
         {} : JSON.parse( fs.readFileSync( customRcPath ) ),
-      manualRC = fewu.config( 'jshintrc' ),
+      manualRC = fewu.config( 'jshint' ),
 
       config = R.reduce( R.merge, {}, [ jshintrc, fileCustomRC, manualRC ] );
 
