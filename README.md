@@ -19,43 +19,36 @@ Then, create a gulpfile with the following contents.
 
     var few = require( 'front-end-work-flow/gulpfile.js' );
 
-After making sure a local gulp exists (`npm install gulp`), typing `gulp` will
-print a list of the available tasks.
+At this point typeing `gulp` will print out a help message with the available
+tasks.
 
 Workflows
 ---------
 
 ### medusa-gaze
 
-development+
+The development starts a server and watches files for changes. When changes
+occur html, json, node, and browser JavaScript are linted and checked for
+code styling. Unit tests are also run.
 
 ### manticore-sting
 
-benchmark and test
+This runs everything mentioned `medusa-gaze` except the developement server, 
+functioning as a test suite.
 
 ### cyclops-crush
 
-build
+The is the standard dist build. Lots of things happen.
 
 ### minotaur-charge
 
-deploy
-
-`gulp medusa-gaze` is a workflow that lints html, json, node, and browser
-JavaScript. It also checks coding style.
+Must be implemented by developers and is ment to be the deploy task
 
 Configuration
 -------------
 
 `front-end-workflow` returns a `FEW Object`. Here is a complete list of all the
 available options for `FEW Objects`s.
-
-
-
-
-
-
-
 
 ### globals
 
@@ -125,13 +118,17 @@ Data URIs are built into LESS using the data-uri function.
 TODO
 ----
 
-// TODO use node's path module
-
-// TODO gulp task for tunnel
+// TODO use gulp-watch instead of gulp.watch
+// TODO Add options to disable browser sync
+// TODO what borked auto-refresh
+// TODO gulp flag for tunnel
+// TODO gulp task no open
+// TODO gulp-rev-all
+// TODO build standalone static development
 
 // Analysis
 // TODO codebaseStats - plato
-// TODO Taylor analysis
+// TODO overtime
 // TODO pagespeed
 // TODO Code coverage
 
