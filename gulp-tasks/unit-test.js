@@ -18,6 +18,10 @@ gulp.task( 'unit-test', function( done ) {
 
   var
     karma = require( 'karma' ).server,
+    addCwd = R.concat( process.cwd() + '/' ),
+
+    html = fewu.config( 'root' ) + '/**/*.html',
+    svg = fewu.config( 'root' ) + '/**/*.svg',
 
     libs = fewu.files( 'libraries' ),
     libFiles = Object.keys( libs ).map( function( libFile ) {
@@ -30,17 +34,33 @@ gulp.task( 'unit-test', function( done ) {
 
     files =
       libFiles.concat(
-        fewu.files( 'unit' ).map( R.concat( process.cwd() + '/' ) ),
-        fewu.files( 'browser' ).map( R.concat( process.cwd() + '/' ) )
+        fewu.files( 'angular.module' ) ? addCwd( html ) : [],
+        fewu.files( 'angular.module' ) ? addCwd( svg ) : [],
+        fewu.files( 'unit' ).map( addCwd ),
+        fewu.files( 'browser' ).map( addCwd )
       ).filter( function( fileSpec ) {
         return !/^!/.test( fileSpec );
-      } );
+      } ),
 
-  karma.start( {
-    configFile: __dirname + '/../karma.conf.js',
-    basePath: __dirname + '/../..',
-    files: files,
-    singleRun: true
-  }, done );
+    preprocessors = {},
+
+    karmaOptions = {
+      files: files,
+      singleRun: true,
+      preprocessors: preprocessors
+    };
+
+  if( fewu.config( 'angular.module' ) ) {
+    preprocessors[ html ] = [ 'ng-html2js' ];
+    preprocessors[ svg ] = [ 'ng-html2js' ];
+    karmaOptions.ngHtml2JsPreprocessor = {
+      stripPrefix: fewu.config( 'root' ),
+      moduleName: fewu.config( 'angular.module' ) + '.templates'
+    };
+  }
+
+  karmaOptions = R.merge( karmaOptions, fewu.config( 'karma' ) );
+
+  karma.start( karmaOptions, done );
 
 } );

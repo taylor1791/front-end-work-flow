@@ -7,6 +7,7 @@
 
 var
   gulp = require( 'gulp' ),
+  gutil = require( 'gulp-util' ),
   R = require( 'ramda' ),
   aggTasks = {};
 
@@ -18,14 +19,19 @@ module.exports.tasks = Object.keys( gulp.tasks );
 module.exports.defaults = {
   globals: { },
   esnext: false,
-  root: './app/',
+  root: 'app/',
   jshintrc: '.jshintrc',
   jscsrc: '.jscsrc',
+  karma: {
+    basePath: process.cwd(),
+    frameworks: [ 'jasmine' ],
+    reporters: [ 'progress' ],
+    browsers: [ 'PhantomJS' ]
+  },
   jshint: { },
   jscs: { },
   angular: {
-    enabled: false,
-    module: 'app',
+    module: '',
     root: '/'
   },
   files: {
@@ -39,7 +45,7 @@ module.exports.defaults = {
     devLibraries: { }
   },
   build: {
-    directory: './dist/',
+    directory: 'dist/',
     'static': {},
     js: 'app.js',
     css: 'style.css',
