@@ -5,6 +5,8 @@ var
   fewu = require( __dirname + '/gulp-tasks/setup' ),
   gulp = require( 'gulp' );
 
+fewu.createTasks();
+
 // All the workflow files classified by their type. The type (key) dictates what
 // types of validations that apply to the files.
 fewu.defaults.files = {

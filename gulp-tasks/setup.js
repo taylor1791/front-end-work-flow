@@ -9,9 +9,19 @@ var
   gulp = require( 'gulp' ),
   gutil = require( 'gulp-util' ),
   R = require( 'ramda' ),
-  aggTasks = {};
+  aggTasks = {},
+  aggTaskDefinitions = module.exports.aggTaskDefinitions = {};
 
-require( 'require-dir' )( '.' );
+// Add an accessor method that gets configuration values.
+module.exports.config = function( config ) {
+  return R.path( config, module.exports.defaults );
+};
+
+// Add an accessor for getting all the files. This allows for the gulp tasks
+// to be split across multiple files effectively.
+module.exports.files = function( path ) {
+  return ( R.path( 'defaults.files.' + path, module.exports ) || [] );
+};
 
 module.exports.exclude = function( path ) {
   var files = module.exports.files( path );
@@ -31,8 +41,37 @@ module.exports.exclude = function( path ) {
   } );
 };
 
-// Grab the names of all the tasks before adding the workflows.
-module.exports.tasks = Object.keys( gulp.tasks );
+module.exports.createTasks = function() {
+
+  // Grab the names of all the tasks before adding the workflows.
+  module.exports.tasks = Object.keys( gulp.tasks );
+
+  // Expose all the aggregate tasks
+  module.exports.aggTasks = Object.keys( aggTaskDefinitions );
+
+  // Create all the aggregate tasks and "workflows"
+  Object.keys( aggTaskDefinitions ).forEach( function( taskName ) {
+    var
+      workflowConfig = aggTaskDefinitions[ taskName ],
+      dependencies = workflowConfig.dependencies || [],
+      task = typeof workflowConfig === 'function' ?
+        workflowConfig : function() {
+
+          ( workflowConfig.watches || [] ).forEach( function( watch ) {
+            var files =
+              watch.files.map( module.exports.files ).reduce( R.concat );
+
+            gulp.watch( files, watch.tasks );
+          } );
+
+        };
+
+    gulp.task( taskName, dependencies, task );
+  } );
+
+};
+
+require( 'require-dir' )( '.' );
 
 module.exports.defaults = {
   globals: { },
@@ -83,7 +122,7 @@ module.exports.defaults = {
 //
 
 // The standard development workflow
-aggTasks[ 'medusa-gaze' ] = {
+aggTaskDefinitions[ 'medusa-gaze' ] = {
   dependencies: [ 'serve' ],
   watches: [
     {
@@ -106,7 +145,7 @@ aggTasks[ 'medusa-gaze' ] = {
 };
 
 // A single run of all tests
-aggTasks[ 'manticore-sting' ] = {
+aggTaskDefinitions[ 'manticore-sting' ] = {
   dependencies: [
     'lint-json', 'lint-html', 'lint-browser', 'lint-node',
     'js-styles', 'unit-test'
@@ -114,45 +153,13 @@ aggTasks[ 'manticore-sting' ] = {
 };
 
 // The build task
-aggTasks[ 'cyclops-crush' ] = {
+aggTaskDefinitions[ 'cyclops-crush' ] = {
   dependencies: [ 'build-js', 'build-css', 'build-html', 'copy-assets' ]
 };
 
 // The deploy task
-aggTasks[ 'minotaur-charge' ] = function() {
+aggTaskDefinitions[ 'minotaur-charge' ] = function() {
   gutil.log(
     gutil.colors.red( 'FEW: minotaur-charge is not yet implemented' )
   );
 };
-
-// Expose all the aggregate tasks
-module.exports.aggTasks = Object.keys( aggTasks );
-
-// Add an accessor method that gets configuration values.
-module.exports.config = R.flip( R.path )( module.exports.defaults );
-
-// Add an accessor for getting all the files. This allows for the gulp tasks
-// to be split across multiple files effectively.
-module.exports.files = function( path ) {
-  return ( R.path( 'defaults.files.' + path, module.exports ) || [] );
-};
-
-// Create all the aggregate tasks and "workflows"
-Object.keys( aggTasks ).forEach( function( taskName ) {
-  var
-    workflowConfig = aggTasks[ taskName ],
-    dependencies = workflowConfig.dependencies || [],
-    task = typeof workflowConfig === 'function' ?
-      workflowConfig : function() {
-
-        ( workflowConfig.watches || [] ).forEach( function( watch ) {
-          var files =
-            watch.files.map( module.exports.files ).reduce( R.concat );
-
-          gulp.watch( files, watch.tasks );
-        } );
-
-      };
-
-  gulp.task( taskName, dependencies, task );
-} );
