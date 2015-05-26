@@ -13,6 +13,24 @@ var
 
 require( 'require-dir' )( '.' );
 
+module.exports.exclude = function( path ) {
+  var files = module.exports.files( path );
+
+  if( typeof files === 'object' ) {
+    files = Object.keys( files ).map( function( ptn ) {
+      return files[ ptn ];
+    } );
+  }
+
+  return files.map( function( file ) {
+    return '!' + (
+      /\/$/.test( file ) ?
+        file + '**/*' :
+        file
+      );
+  } );
+};
+
 // Grab the names of all the tasks before adding the workflows.
 module.exports.tasks = Object.keys( gulp.tasks );
 

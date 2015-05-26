@@ -37,7 +37,7 @@ gulp.task( 'lint-node', function() {
   var
     jshint = require( 'gulp-jshint' ),
 
-    files = fewu.files( 'node' ),
+    files = fewu.files( 'node' ).concat( fewu.exclude( 'libraries' ) ),
     config = getConfig();
 
   config.node = true;
@@ -54,7 +54,7 @@ gulp.task( 'lint-browser', function() {
   var
     jshint = require( 'gulp-jshint' ),
 
-    files = fewu.files( 'browser' ),
+    files = fewu.files( 'browser' ).concat( fewu.exclude( 'libraries' ) ),
     config = getConfig();
 
   config.browser = true;

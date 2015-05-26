@@ -38,7 +38,8 @@ gulp.task( 'js-styles', function() {
     jscs = require( 'gulp-jscs' ),
 
     files = fewu.files( 'browser' )
-      .concat( fewu.files( 'node' ) );
+      .concat( fewu.files( 'node' ) )
+      .concat( fewu.exclude( 'libraries' ) );
 
   return gulp.src( files )
     .pipe( jscs( getConfig() ) );

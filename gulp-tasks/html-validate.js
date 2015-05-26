@@ -14,7 +14,7 @@ gulp.task( 'lint-html', function() {
   var
     htmlhint = require( 'gulp-htmlhint' ),
 
-    files = fewu.files( 'html' );
+    files = fewu.files( 'html' ).concat( fewu.exclude( 'libraries' ) );
 
   return gulp.src( files )
     .pipe( htmlhint( {
