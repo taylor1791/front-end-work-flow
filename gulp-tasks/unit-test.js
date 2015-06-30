@@ -55,6 +55,7 @@ gulp.task( 'unit-test', function( done ) {
     preprocessors[ svg ] = [ 'ng-html2js' ];
     karmaOptions.ngHtml2JsPreprocessor = {
       stripPrefix: fewu.config( 'root' ),
+      prependPrefix: fewu.config( 'angular.root' ),
       moduleName: fewu.config( 'angular.module' ) + '.templates'
     };
   }
