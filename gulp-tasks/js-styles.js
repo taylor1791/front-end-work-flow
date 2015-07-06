@@ -23,7 +23,14 @@ var
         {} : JSON.parse( fs.readFileSync( customRcPath ) ),
       manualRC = fewu.config( 'jscsrc' ),
 
-    config = R.reduce( R.merge, {}, [ jscsrc, fileCustomRC, manualRC ] );
+      config = R.reduce( R.merge, {}, [ jscsrc, fileCustomRC, manualRC ] );
+
+    // Remove all false keys since jscs requires them.
+    Object.keys( config ).forEach( function( key ) {
+      if( !config[ key ] ) {
+        delete config[ key ];
+      }
+    } );
 
     if ( fewu.config( 'esnext' ) ) {
       config.esnext = true;
