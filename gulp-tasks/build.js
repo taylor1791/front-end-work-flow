@@ -50,6 +50,7 @@ gulp.task( 'build-css', [ 'build-clean' ], function() {
 gulp.task( 'build-js', [ 'build-clean' ], function() {
 
   var
+    footer  = require( 'gulp-footer' ),
     header  = require( 'gulp-header' ),
     htmlMin = require( 'gulp-minify-html' ),
     gulpif  = require( 'gulp-if' ),
@@ -90,6 +91,10 @@ gulp.task( 'build-js', [ 'build-clean' ], function() {
     .pipe( gulpif( !!fewu.config( 'angular.module' ), ngAnnotate() ) )
     .pipe( uglify( { } ) )
     .pipe( concat( fewu.config( 'build.js' ) ) )
+    .pipe( footer( fewu.config( 'build.footer' ), {
+      pkg: require( process.cwd() + '/package' ),
+      date: new Date()
+    } ) )
     .pipe( header( fewu.config( 'build.header' ), {
       pkg: require( process.cwd() + '/package' ),
       date: new Date()
