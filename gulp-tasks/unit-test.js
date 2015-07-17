@@ -23,7 +23,10 @@ gulp.task( 'unit-test', function( done ) {
     html = fewu.config( 'root' ) + '/**/*.html',
     svg = fewu.config( 'root' ) + '/**/*.svg',
 
-    libs = fewu.files( 'libraries' ),
+    libs = R.merge(
+      fewu.files( 'libraries' ),
+      fewu.files( 'devLibraries' )
+    ),
     libFiles = Object.keys( libs ).map( function( libFile ) {
       var libFilePath = process.cwd() + '/' + libs[ libFile ];
 
@@ -33,14 +36,16 @@ gulp.task( 'unit-test', function( done ) {
     } ),
 
     files =
-      libFiles.concat(
+      [].concat(
+        fewu.files( 'unit' ).map( addCwd ),
+        libFiles,
         fewu.files( 'angular.module' ) ? addCwd( html ) : [],
         fewu.files( 'angular.module' ) ? addCwd( svg ) : [],
-        fewu.files( 'unit' ).map( addCwd ),
         fewu.files( 'browser' ).map( addCwd )
       ).filter( function( fileSpec ) {
         return !/^!/.test( fileSpec );
       } ),
+
 
     preprocessors = {},
 

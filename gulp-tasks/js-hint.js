@@ -36,9 +36,11 @@ var
 gulp.task( 'lint-node', function() {
   var
     jshint = require( 'gulp-jshint' ),
+    config = getConfig(),
 
-    files = fewu.files( 'node' ).concat( fewu.exclude( 'libraries' ) ),
-    config = getConfig();
+    files = fewu.files( 'node' )
+      .concat( fewu.exclude( 'libraries' ) )
+      .concat( fewu.exclude( 'devLibraries' ) );
 
   config.node = true;
   config.globals = fewu.config( 'globals' );
@@ -53,9 +55,11 @@ gulp.task( 'lint-node', function() {
 gulp.task( 'lint-browser', function() {
   var
     jshint = require( 'gulp-jshint' ),
+    config = getConfig(),
 
-    files = fewu.files( 'browser' ).concat( fewu.exclude( 'libraries' ) ),
-    config = getConfig();
+    files = fewu.files( 'browser' )
+      .concat( fewu.exclude( 'libraries' ) )
+      .concat( fewu.exclude( 'devLibraries' ) );
 
   config.browser = true;
   config.globals = fewu.config( 'globals' );

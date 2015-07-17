@@ -14,7 +14,9 @@ gulp.task( 'lint-json', function() {
   var
     jsonlint = require( 'gulp-jsonlint' ),
 
-    files = fewu.files( 'json' ).concat( fewu.exclude( 'libraries' ) );
+    files = fewu.files( 'json' )
+      .concat( fewu.exclude( 'libraries' ) )
+      .concat( fewu.exclude( 'devLibraries' ) );
 
   return gulp.src( files )
     .pipe( jsonlint() )
