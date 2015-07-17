@@ -82,7 +82,7 @@ module.exports.defaults = {
   karma: {
     basePath: process.cwd(),
     frameworks: [ 'jasmine' ],
-    reporters: [ 'progress' ],
+    reporters: [ 'progress', 'coverage' ],
     browsers: [ 'PhantomJS' ]
   },
   jshint: { },
@@ -101,6 +101,7 @@ module.exports.defaults = {
     libraries: { },
     devLibraries: { }
   },
+  coverage: 'coverage',
   build: {
     directory: 'dist/',
     'static': {},

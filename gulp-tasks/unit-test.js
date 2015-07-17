@@ -20,6 +20,7 @@ gulp.task( 'unit-test', function( done ) {
     karma = require( 'karma' ).server,
     addCwd = R.concat( process.cwd() + '/' ),
 
+    js = fewu.config( 'root' ) + '/**/*.js',
     html = fewu.config( 'root' ) + '/**/*.html',
     svg = fewu.config( 'root' ) + '/**/*.svg',
 
@@ -46,16 +47,22 @@ gulp.task( 'unit-test', function( done ) {
         return !/^!/.test( fileSpec );
       } ),
 
+    coverageReporter = {
+      type: 'html',
+      dir: fewu.config( 'coverage' )
+    },
 
     preprocessors = {},
 
     karmaOptions = {
       files: files,
       singleRun: true,
-      preprocessors: preprocessors
+      preprocessors: preprocessors,
+      coverageReporter: coverageReporter
     };
 
   if( fewu.config( 'angular.module' ) ) {
+    preprocessors[ js ] = [ 'coverage' ];
     preprocessors[ html ] = [ 'ng-html2js' ];
     preprocessors[ svg ] = [ 'ng-html2js' ];
     karmaOptions.ngHtml2JsPreprocessor = {
