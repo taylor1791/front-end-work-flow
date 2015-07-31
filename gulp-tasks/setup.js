@@ -79,6 +79,9 @@ module.exports.defaults = {
   root: 'app/',
   jshintrc: '.jshintrc',
   jscsrc: '.jscsrc',
+  htmlHint: {
+    'doctype-first': false
+  },
   browserSync: {
     port: process.env.PORT || undefined,
     watchOptions: {
