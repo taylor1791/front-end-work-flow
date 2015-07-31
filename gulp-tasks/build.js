@@ -162,17 +162,17 @@ gulp.task( 'copy-assets', [ 'build-clean' ], function() {
   var
     merge   = require( 'event-stream' ).merge,
     imageMin = require( 'gulp-imagemin' ),
+    gulpif = require( 'gulp-if' ),
 
     staticAssetPaths = fewu.config( 'build.static' ),
     staticAssets = Object.keys( staticAssetPaths ),
     assetStreams = staticAssets.map( function( pattern ) {
 
       return gulp.src( pattern )
-        .pipe( imageMin( {
-          optimizationLevel: 7,
-          progressive: true,
-          interlaced: true
-        } ) )
+        .pipe( gulpif(
+          !!fewu.config( 'build.imageMin' ),
+          imageMin( fewu.config( 'build.imageMin' ) )
+        ) )
         .pipe( gulp.dest(
           fewu.config( 'build.directory' ) + staticAssetPaths[ pattern ]
         ) );
