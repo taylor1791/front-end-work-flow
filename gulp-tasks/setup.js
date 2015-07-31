@@ -120,6 +120,7 @@ module.exports.defaults = {
     'static': {},
     js: 'app.js',
     css: 'style.css',
+    html: { conditionals: true },
     header: [ '/**',
       ' * <%= pkg.name %> - <%= pkg.description %>',
       ' * @version v<%= pkg.version %>',

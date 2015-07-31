@@ -125,7 +125,7 @@ gulp.task( 'build-html',
           js: fileReves[ fewu.config( 'build.js' ) ],
           css: fileReves[ fewu.config( 'build.css' ) ]
         } ) )
-        .pipe( htmlMin( { conditionals: true } ) )
+        .pipe( htmlMin( fewu.config( 'build.html' ) ) )
         .pipe( gulp.dest( fewu.config( 'build.directory' ) ) );
 
     return indexBuild;
