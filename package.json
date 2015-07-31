@@ -1,6 +1,6 @@
 {
   "name": "front-end-work-flow",
-  "version": "5.2.0",
+  "version": "5.2.1",
   "description": "Workflow for JavaScript minors and olympiads.",
   "main": "index.js",
   "scripts": {

@@ -170,8 +170,8 @@ gulp.task( 'copy-assets', [ 'build-clean' ], function() {
 
       return gulp.src( pattern )
         .pipe( gulpif(
-          !!fewu.config( 'build.imageMin' ),
-          imageMin( fewu.config( 'build.imageMin' ) )
+          !!fewu.config( 'build.image' ),
+          imageMin( fewu.config( 'build.image' ) )
         ) )
         .pipe( gulp.dest(
           fewu.config( 'build.directory' ) + staticAssetPaths[ pattern ]

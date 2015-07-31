@@ -130,7 +130,7 @@ module.exports.defaults = {
     ].join( '\n' ),
     footer: '',
     cssAutoprefix: [ 'IE 8', '> 1%', 'last 2 versions' ],
-    imageMin: {
+    image: {
       optimizationLevel: 7,
       progressive: true,
       interlaced: true
