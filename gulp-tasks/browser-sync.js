@@ -21,19 +21,11 @@ gulp.task( 'serve', function() {
     args.pipe( browserSync.reload( { stream: true } ) );
   } );
 
-  browserSync( {
-    port: process.env.PORT || undefined,
+  browserSync( R.merge( fewu.config( 'browserSync' ), {
     server: {
       baseDir: fewu.config( 'root' ),
       routes: R.merge( fewu.files( 'devLibraries' ), fewu.files( 'libraries' ) )
-    },
-    watchOptions: {
-      debounceDelay: 100
-    },
-    ghostMode: {
-      location: true
-    },
-    logFileChanges: false
-  } );
+    }
+  } ) );
 
 } );

@@ -79,6 +79,16 @@ module.exports.defaults = {
   root: 'app/',
   jshintrc: '.jshintrc',
   jscsrc: '.jscsrc',
+  browserSync: {
+    port: process.env.PORT || undefined,
+    watchOptions: {
+      debounceDelay: 100
+    },
+    ghostMode: {
+      location: true
+    },
+    logFileChanges: false
+  },
   karma: {
     basePath: process.cwd(),
     frameworks: [ 'jasmine' ],
