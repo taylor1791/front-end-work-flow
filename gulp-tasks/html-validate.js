@@ -19,6 +19,6 @@ gulp.task( 'lint-html', function() {
       .concat( fewu.exclude( 'devLibraries' ) );
 
   return gulp.src( files )
-    .pipe( htmlhint( fewu.config( 'htmlLint' ) ) )
+    .pipe( htmlhint( fewu.config( 'htmlHint' ) ) )
     .pipe( htmlhint.reporter() );
 } );
