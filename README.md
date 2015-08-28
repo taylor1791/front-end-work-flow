@@ -46,6 +46,11 @@ The is the standard dist build. Lots of things happen.
 
 Must be implemented by developers and is ment to be the deploy task
 
+Configuration Examples
+----------------------
+
+  * https://gist.github.com/taylor1791/ba7638b0d73a6f139ef1
+
 Configuration
 -------------
 
